@@ -9,9 +9,9 @@ import me.xiaopan.easyandroid.util.Colors;
 import me.xiaopan.easyandroid.widget.ViewPagerAdapter;
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,21 +19,19 @@ import android.widget.TextView;
  * 带滑动标题的ViewPager
  */
 public class SlidingTabStripActivity extends Activity {
-	private SlidingTabStrip moreSlideTitlebar;
-	private SlidingTabStrip shaoSlideTitlebar;
+	private SlidingTabStrip moreSlidingTabStrip;
+	private SlidingTabStrip shaoSlidingTabStrip;
+	private ViewPager moreViewPager;
+	private ViewPager shaoViewPager;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sliding_tab_strip);
-		moreSlideTitlebar = (SlidingTabStrip) findViewById(R.id.slidingTabStrip_more);
-		shaoSlideTitlebar = (SlidingTabStrip) findViewById(R.id.slidingTabStrip_shao);
-		
-		moreSlideTitlebar.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				moreSlideTitlebar.setCurrentItem(5);
-			}
-		});
+		moreSlidingTabStrip = (SlidingTabStrip) findViewById(R.id.slidingTabStrip_more);
+		shaoSlidingTabStrip = (SlidingTabStrip) findViewById(R.id.slidingTabStrip_shao);
+		moreViewPager = (ViewPager) findViewById(R.id.viewPager_more);
+		shaoViewPager = (ViewPager) findViewById(R.id.viewPager_shao);
 		
 		/* 初始化标题 */
 		List<View> tabs = new ArrayList<View>();
@@ -48,7 +46,7 @@ public class SlidingTabStripActivity extends Activity {
 		tabs.add(createTitle("医学"));
 		tabs.add(createTitle("艺术"));
 		tabs.add(createTitle("地理"));
-		moreSlideTitlebar.setTitles(tabs);
+		moreSlidingTabStrip.addTabs(tabs);
 		
 		/* 初始化内容 */
 		List<View> views = new ArrayList<View>();
@@ -63,7 +61,8 @@ public class SlidingTabStripActivity extends Activity {
 		views.add(getContentView(Colors.RED));
 		views.add(getContentView(Colors.YELLOW));
 		views.add(getContentView(Colors.GRAY));
-		moreSlideTitlebar.getViewPager().setAdapter(new ViewPagerAdapter(views));
+		moreSlidingTabStrip.setViewPager(moreViewPager);
+		moreViewPager.setAdapter(new ViewPagerAdapter(views));
 		
 		/* 初始化标题 */
 		List<View> tabs2 = new ArrayList<View>();
@@ -71,7 +70,7 @@ public class SlidingTabStripActivity extends Activity {
 		tabs2.add(createTitle("工具"));
 		tabs2.add(createTitle("天涯海角"));
 		tabs2.add(createTitle("学习"));
-		shaoSlideTitlebar.setTitles(tabs2);
+		shaoSlidingTabStrip.addTabs(tabs2);
 		
 		/* 初始化内容 */
 		List<View> views2 = new ArrayList<View>();
@@ -79,7 +78,8 @@ public class SlidingTabStripActivity extends Activity {
 		views2.add(getContentView(Colors.CHOCOLATE));
 		views2.add(getContentView(Colors.CYAN));
 		views2.add(getContentView(Colors.FUCHSIA));
-		shaoSlideTitlebar.getViewPager().setAdapter(new ViewPagerAdapter(views2));
+		shaoViewPager.setAdapter(new ViewPagerAdapter(views2));
+		shaoSlidingTabStrip.setViewPager(shaoViewPager);
 	}
 
 	private TextView createTitle(String title){

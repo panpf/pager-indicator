@@ -19,9 +19,6 @@ package test;
 import java.util.Locale;
 
 import me.xiaopan.android.slidingtabstrip.R;
-import me.xiaopan.android.slidingtabstrip.R.drawable;
-import me.xiaopan.android.slidingtabstrip.R.styleable;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
