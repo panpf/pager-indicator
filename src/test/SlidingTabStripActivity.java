@@ -62,20 +62,11 @@ public class SlidingTabStripActivity extends Activity {
 		moreSlidingTabStrip.setViewPager(moreViewPager);
 		moreViewPager.setAdapter(new ViewPagerAdapter(views));
 		
-		/* 初始化标题 */
-		List<View> tabs2 = new ArrayList<View>();
-		tabs2.add(createTitle("游戏娱乐"));
-		tabs2.add(createTitle("工具"));
-		tabs2.add(createTitle("天涯海角"));
-		tabs2.add(createTitle("学习"));
-		shaoSlidingTabStrip.addTabs(tabs2);
-		
 		/* 初始化内容 */
 		List<View> views2 = new ArrayList<View>();
 		views2.add(getContentView(Colors.SKYBLUE));
 		views2.add(getContentView(Colors.CHOCOLATE));
 		views2.add(getContentView(Colors.CYAN));
-		views2.add(getContentView(Colors.FUCHSIA));
 		shaoViewPager.setAdapter(new ViewPagerAdapter(views2));
 		shaoSlidingTabStrip.setViewPager(shaoViewPager);
 	}

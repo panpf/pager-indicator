@@ -6,23 +6,23 @@
     <me.xiaopan.android.slidingtabstrip.SlidingTabStrip 
         android:id="@+id/slidingTabStrip_more" 
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent">
-            <TextView style="@style/text_slidingTabTitle" android:text="新闻"/>
-        </LinearLayout>
-    </me.xiaopan.android.slidingtabstrip.SlidingTabStrip>
+		android:layout_height="wrap_content"/>
     <android.support.v4.view.ViewPager 
         android:layout_width="match_parent"
 		android:layout_height="0dp"
 		android:layout_weight="1" 
-		android:id="@+id/viewPager_more"
-        />
+		android:id="@+id/viewPager_more" />
     
     <me.xiaopan.android.slidingtabstrip.SlidingTabStrip
         android:id="@+id/slidingTabStrip_shao" 
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content" 
-		/>
+		android:layout_height="wrap_content" >
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#880000ff">
+			<TextView style="@style/text_slidingTabTitle" android:text="让政府去腐败"/>            
+			<TextView style="@style/text_slidingTabTitle" android:text="工具"/>            
+			<TextView style="@style/text_slidingTabTitle" android:text="休闲娱乐"/>            
+        </LinearLayout>
+    </me.xiaopan.android.slidingtabstrip.SlidingTabStrip>
     <android.support.v4.view.ViewPager 
         android:layout_width="match_parent"
 		android:layout_height="0dp"
