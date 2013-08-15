@@ -1,6 +1,5 @@
 package me.xiaopan.android.slidingtabstrip;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import android.content.Context;
@@ -126,38 +125,16 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 			
 			/* 将宽度小于平均宽度的tab的宽度和测量宽度设为新的平均宽度 */
 			for(int w = 0; w < getTabsLayout().getChildCount(); w++){
-				//设置测量宽度和宽度
+				//更新宽度并再次测量让新的宽度生效，要不然文字不会居中
 				tabView = getTabsLayout().getChildAt(w);
-				if(tabView.getMeasuredWidth() < averageWidth){
-					setMeasuredWidth(tabView, newAverageWidth);
-				}
 				ViewGroup.LayoutParams layoutParams = tabView.getLayoutParams();
-				layoutParams.width = tabView.getMeasuredWidth();
+				layoutParams.width = tabView.getMeasuredWidth() < averageWidth?newAverageWidth:tabView.getMeasuredWidth();
 				tabView.setLayoutParams(layoutParams);
-				
-				//更新完宽度之后再测量一次，让新的宽度生效，要不然文字不会居中
 				measure(tabView);
 			}
-			
-			/* 将TabsLayout的宽度设为同SlidingTabStrip一样 */
-			setMeasuredWidth(getTabsLayout(), r-l);
-			ViewGroup.LayoutParams layoutParams =  getTabsLayout().getLayoutParams();
-			layoutParams.width = getTabsLayout().getMeasuredWidth();
-			getTabsLayout().setLayoutParams(layoutParams);
+			measure(getTabsLayout());
 		}
 		super.onLayout(changed, l, t, r, b);
-	}
-	
-	private void setMeasuredWidth(View view, int measuredWidth){
-		try {
-			Field mMeasuredWidthField = getField(view.getClass(), "mMeasuredWidth", true, true);
-			mMeasuredWidthField.setAccessible(true);
-			mMeasuredWidthField.set(view, measuredWidth);
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	@Override
@@ -223,7 +200,7 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 	 * @param view
 	 * @return
 	 */
-	private static final View measure(View view){
+	private final View measure(View view){
 		ViewGroup.LayoutParams p = view.getLayoutParams();
 	    if (p == null) {
 	        p = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -256,24 +233,5 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 				viewPager.setCurrentItem(tabPosition, true);
 			}
 		}
-	}
-	
-	public static Field getField(Class<?> sourceClass, String fieldName, boolean isFindDeclaredField, boolean isUpwardFind){
-		Field field = null;
-		try {
-			field = isFindDeclaredField ? sourceClass.getDeclaredField(fieldName) : sourceClass.getField(fieldName);
-		} catch (NoSuchFieldException e1) {
-			if(isUpwardFind){
-				Class<?> classs = sourceClass.getSuperclass();
-				while(field == null && classs != null){
-					try {
-						field = isFindDeclaredField ? classs.getDeclaredField(fieldName) : classs.getField(fieldName);
-					} catch (NoSuchFieldException e11) {
-						classs = classs.getSuperclass();
-					}
-				}
-			}
-		}
-		return field;
 	}
 }
