@@ -5,8 +5,6 @@ import java.util.List;
 
 import me.xiaopan.android.slidingtabstrip.R;
 import me.xiaopan.android.slidingtabstrip.SlidingTabStrip;
-import me.xiaopan.easyandroid.util.Colors;
-import me.xiaopan.easyandroid.widget.ViewPagerAdapter;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;

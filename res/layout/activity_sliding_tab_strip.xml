@@ -6,8 +6,11 @@
     <me.xiaopan.android.slidingtabstrip.SlidingTabStrip 
         android:id="@+id/slidingTabStrip_more" 
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		/>
+		android:layout_height="wrap_content">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent">
+            <TextView style="@style/text_slidingTabTitle" android:text="新闻"/>
+        </LinearLayout>
+    </me.xiaopan.android.slidingtabstrip.SlidingTabStrip>
     <android.support.v4.view.ViewPager 
         android:layout_width="match_parent"
 		android:layout_height="0dp"

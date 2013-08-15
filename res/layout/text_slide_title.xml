@@ -1,10 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:background="@drawable/selector_slide_title"
-    android:padding="16dp"
-    android:gravity="center"
-    android:textColor="@color/selector_slide_title"
-    android:textSize="15sp"
-    />
+<TextView xmlns:android="http://schemas.android.com/apk/res/android" style="@style/text_slidingTabTitle" />
