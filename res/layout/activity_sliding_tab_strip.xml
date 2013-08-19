@@ -6,27 +6,29 @@
     <me.xiaopan.android.slidingtabstrip.SlidingTabStrip 
         android:id="@+id/slidingTabStrip_more" 
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"/>
-    <android.support.v4.view.ViewPager 
-        android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="1" 
-		android:id="@+id/viewPager_more" />
+		android:layout_height="wrap_content">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+			<TextView style="@style/text_slidingTabTitle" android:text="游戏娱乐"/>            
+			<TextView style="@style/text_slidingTabTitle" android:text="工具"/>            
+        </LinearLayout>
+    </me.xiaopan.android.slidingtabstrip.SlidingTabStrip>
+    <FrameLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+	    <android.support.v4.view.ViewPager android:layout_width="match_parent" android:layout_height="match_parent" android:id="@+id/viewPager_more" />
+        <include layout="@layout/include_shadow_down"/>
+    </FrameLayout>
     
     <me.xiaopan.android.slidingtabstrip.SlidingTabStrip
         android:id="@+id/slidingTabStrip_shao" 
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content" >
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#880000ff">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
 			<TextView style="@style/text_slidingTabTitle" android:text="让政府去腐败"/>            
-			<TextView style="@style/text_slidingTabTitle" android:text="工具"/>            
+			<TextView style="@style/text_slidingTabTitle" android:text="撸吧"/>            
 			<TextView style="@style/text_slidingTabTitle" android:text="休闲娱乐"/>            
         </LinearLayout>
     </me.xiaopan.android.slidingtabstrip.SlidingTabStrip>
-    <android.support.v4.view.ViewPager 
-        android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="1" 
-		android:id="@+id/viewPager_shao"
-        />
+    <FrameLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+	    <android.support.v4.view.ViewPager android:layout_width="match_parent" android:layout_height="match_parent" android:id="@+id/viewPager_shao" />
+        <include layout="@layout/include_shadow_down"/>
+    </FrameLayout>
 </LinearLayout>

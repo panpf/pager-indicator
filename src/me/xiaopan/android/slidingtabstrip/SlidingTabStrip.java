@@ -3,6 +3,8 @@ package me.xiaopan.android.slidingtabstrip;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -13,11 +15,17 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
-/**
- * 带有滑动标题的ViewPager，你只需调用setTabs
- */
 public class SlidingTabStrip extends HorizontalScrollView implements OnPageChangeListener, OnGlobalLayoutListener{
-	private int centerPosition;	//中间位置
+	private int currentPosition;	//当前位置
+	private int lastOffset;
+	private int lastScrollX = 0;
+	private int indicatorColor = 0xFFFF0000;
+	private int underlineColor = 0xFFFF0000;
+	private int indicatorHeight = 8;
+	private int underlineHeight = 4;
+	private float currentPositionOffset;	//当前位置偏移量
+	private boolean start;
+	private Paint rectPaint;
 	private ViewGroup tabsLayout;	//标题项布局
 	private ViewPager viewPager;	//ViewPager
 	private View currentSelectedTabView;	//当前标题项
@@ -37,6 +45,7 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 	 * 初始化
 	 */
 	private void init(){
+		rectPaint = new Paint();
 		setHorizontalScrollBarEnabled(false);	//隐藏横向滑动提示条
 		getViewTreeObserver().addOnGlobalLayoutListener(this);
 	}
@@ -70,23 +79,22 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 	@Override
 	@SuppressWarnings("deprecation")
 	public void onGlobalLayout() {
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+			getViewTreeObserver().removeGlobalOnLayoutListener(this);
+		} else {
+			getViewTreeObserver().removeOnGlobalLayoutListener(this);
+		}
+		
 		if(getTabsLayout() != null && getTabsLayout().getChildCount() > 0){
-			//初始化第一个选中的
-			if(currentSelectedTabView == null){
-				currentSelectedTabView = getTabsLayout().getChildAt(0);
-				currentSelectedTabView.setSelected(true);
-			}
+			/* 初始化滑块位置以及选选中状态 */
+			currentPosition = viewPager != null?viewPager.getCurrentItem():0;
+			scrollToChild(currentPosition, 0);	//移动滑块到指定位置
+			selectedTab(currentPosition);	//选中指定位置的TAB
 			
 			//给每一个tab设置点击事件，当点击的时候切换Pager
 			for(int w = 0; w < getTabsLayout().getChildCount(); w++){
 				getTabsLayout().getChildAt(w).setOnClickListener(new TabClickListener(w));
 			}
-		}
-		
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-			getViewTreeObserver().removeGlobalOnLayoutListener(this);
-		} else {
-			getViewTreeObserver().removeOnGlobalLayoutListener(this);
 		}
 	}
 	
@@ -105,9 +113,7 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 	
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
-		centerPosition = (r + l) / 2;	//初始化中间位置
-		
-		/* 如果当前的标题内容在横向上不能够将SlideTitlebar充满，那么就试图更改所有标题的宽度，来充满SlideTitlebar */
+		/* 如果当前的标题内容在横向上不能够将SlidingTabStrip充满，那么就试图更改所有标题的宽度，来充满SlidingTabStrip */
 		if(getTabsLayout() != null && getTabsLayout().getChildCount() > 0 && measure(getTabsLayout()).getMeasuredWidth() < r - l){
 			/* 先计算出除去宽度大于平均宽度的tab之后的平均宽度 */
 			int canDivideWidth = r - l;		//初始化可平分宽度，默认为总宽度
@@ -139,27 +145,20 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 	
 	@Override
 	public void onPageSelected(int position) {
-		if(position > -1 && getTabsLayout() != null && position < getTabsLayout().getChildCount()){
-			//切换选中状态
-			if(currentSelectedTabView != null){
-				currentSelectedTabView.setSelected(false);
-			}
-			currentSelectedTabView = getTabsLayout().getChildAt(position);
-			currentSelectedTabView.setSelected(true);
-			
-			//处理滑动
-			smoothScrollTo((currentSelectedTabView.getLeft() + currentSelectedTabView.getRight())/2 - centerPosition, currentSelectedTabView.getTop());
-		}
-		
+		selectedTab(position);
 		if(onPageChangeListener != null){
 			onPageChangeListener.onPageSelected(position);
 		}
 	}
 	
 	@Override
-	public void onPageScrolled(int arg0, float arg1, int arg2) {
+	public void onPageScrolled(int nextPagePosition, float positionOffset, int positionOffsetPixels) {
+		currentPosition = nextPagePosition;
+		currentPositionOffset = positionOffset;
+		scrollToChild(nextPagePosition, (int) (positionOffset * getTabsLayout().getChildAt(nextPagePosition).getWidth()));
+		invalidate();
 		if(onPageChangeListener != null){
-			onPageChangeListener.onPageScrolled(arg0, arg1, arg2);
+			onPageChangeListener.onPageScrolled(nextPagePosition, positionOffset, positionOffsetPixels);
 		}
 	}
 	
@@ -167,6 +166,80 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 	public void onPageScrollStateChanged(int arg0) {
 		if(onPageChangeListener != null){
 			onPageChangeListener.onPageScrollStateChanged(arg0);
+		}
+	}
+	
+	@Override
+	protected void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
+
+		if(getTabsLayout() != null && getTabsLayout().getChildCount() > 0){
+			final int height = getHeight();
+			
+			/* 绘制滑块 */
+			View currentTab = getTabsLayout().getChildAt(currentPosition);
+			float lineLeft = currentTab.getLeft();
+			float lineRight = currentTab.getRight();
+			if (currentPositionOffset > 0f && currentPosition < getTabsLayout().getChildCount() - 1) {
+				View nextTab = getTabsLayout().getChildAt(currentPosition + 1);
+				final float nextTabLeft = nextTab.getLeft();
+				final float nextTabRight = nextTab.getRight();
+				lineLeft = (currentPositionOffset * nextTabLeft + (1f - currentPositionOffset) * lineLeft);
+				lineRight = (currentPositionOffset * nextTabRight + (1f - currentPositionOffset) * lineRight);
+			}
+			rectPaint.setColor(indicatorColor);
+			canvas.drawRect(lineLeft, height - indicatorHeight, lineRight, height, rectPaint);
+			
+			/* 绘制下划线 */
+			rectPaint.setColor(underlineColor);
+			canvas.drawRect(0, height - underlineHeight, getTabsLayout().getWidth(), height, rectPaint);
+		}
+	}
+	
+	/**
+	 * 滚动到指定的位置
+	 * @param position
+	 * @param offset
+	 */
+	private void scrollToChild(int position, int offset) {
+		if(getTabsLayout() != null && getTabsLayout().getChildCount() > 0){
+			//计算新的X坐标
+			int newScrollX = getTabsLayout().getChildAt(position).getLeft() + offset;
+			if (position > 0 || offset > 0) {
+				newScrollX -= 240 - getOffset(getTabsLayout().getChildAt(position).getWidth())/2;
+			}
+			
+			//如果同上次X坐标不一样就执行滚动
+			if (newScrollX != lastScrollX) {
+				lastScrollX = newScrollX;
+				scrollTo(newScrollX, 0);
+			}
+		}
+	}
+	
+	private int getOffset(int newOffset){
+		if(lastOffset < newOffset){
+			if(start){
+				lastOffset += 1;
+				return lastOffset;
+			}else{
+				start = true;
+				lastOffset += 1;
+				return lastOffset;
+			}
+		}if(lastOffset > newOffset){
+			if(start){
+				lastOffset -= 1;
+				return lastOffset;
+			}else{
+				start = true;
+				lastOffset -= 1;
+				return lastOffset;
+			}
+		}else{
+			start = true;
+			lastOffset = newOffset;
+			return lastOffset;
 		}
 	}
 
@@ -195,6 +268,38 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 		this.onPageChangeListener = onPageChangeListener;
 	}
 	
+	public int getIndicatorColor() {
+		return indicatorColor;
+	}
+
+	public void setIndicatorColor(int indicatorColor) {
+		this.indicatorColor = indicatorColor;
+	}
+
+	public int getUnderlineColor() {
+		return underlineColor;
+	}
+
+	public void setUnderlineColor(int underlineColor) {
+		this.underlineColor = underlineColor;
+	}
+
+	public int getIndicatorHeight() {
+		return indicatorHeight;
+	}
+
+	public void setIndicatorHeight(int indicatorHeight) {
+		this.indicatorHeight = indicatorHeight;
+	}
+
+	public int getUnderlineHeight() {
+		return underlineHeight;
+	}
+
+	public void setUnderlineHeight(int underlineHeight) {
+		this.underlineHeight = underlineHeight;
+	}
+
 	/**
 	 * 执行测量，执行完成之后只需调用View的getMeasuredXXX()方法即可获取测量结果
 	 * @param view
@@ -215,6 +320,20 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 	    }
 	    view.measure(childWidthSpec, childHeightSpec);
 	    return view;
+	}
+	
+	/**
+	 * 选中指定位置的TAB
+	 * @param currentSelectedTabPosition
+	 */
+	private void selectedTab(int currentSelectedTabPosition){
+		if(currentSelectedTabPosition > -1 && getTabsLayout() != null && currentSelectedTabPosition < getTabsLayout().getChildCount()){
+			if(currentSelectedTabView != null){
+				currentSelectedTabView.setSelected(false);
+			}
+			currentSelectedTabView = getTabsLayout().getChildAt(currentSelectedTabPosition);
+			currentSelectedTabView.setSelected(true);
+		}
 	}
 	
 	/**

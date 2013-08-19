@@ -31,22 +31,7 @@ public class SlidingTabStripActivity extends Activity {
 		moreViewPager = (ViewPager) findViewById(R.id.viewPager_more);
 		shaoViewPager = (ViewPager) findViewById(R.id.viewPager_shao);
 		
-		/* 初始化标题 */
-		List<View> tabs = new ArrayList<View>();
-		tabs.add(createTitle("游戏娱乐"));
-		tabs.add(createTitle("工具"));
-		tabs.add(createTitle("天涯海角"));
-		tabs.add(createTitle("学习"));
-		tabs.add(createTitle("美化"));
-		tabs.add(createTitle("图书"));
-		tabs.add(createTitle("体育"));
-		tabs.add(createTitle("机械化"));
-		tabs.add(createTitle("医学"));
-		tabs.add(createTitle("艺术"));
-		tabs.add(createTitle("地理"));
-		moreSlidingTabStrip.addTabs(tabs);
-		
-		/* 初始化内容 */
+		/* 初始化第一个SlidingTabStrip */
 		List<View> views = new ArrayList<View>();
 		views.add(getContentView(Colors.SKYBLUE));
 		views.add(getContentView(Colors.CHOCOLATE));
@@ -59,16 +44,33 @@ public class SlidingTabStripActivity extends Activity {
 		views.add(getContentView(Colors.RED));
 		views.add(getContentView(Colors.YELLOW));
 		views.add(getContentView(Colors.GRAY));
-		moreSlidingTabStrip.setViewPager(moreViewPager);
 		moreViewPager.setAdapter(new ViewPagerAdapter(views));
+		moreViewPager.setCurrentItem(3);
 		
-		/* 初始化内容 */
+		List<View> tabs = new ArrayList<View>();
+		tabs.add(createTitle("天涯海角"));
+		tabs.add(createTitle("学习"));
+		tabs.add(createTitle("美化"));
+		tabs.add(createTitle("图书"));
+		tabs.add(createTitle("体育"));
+		tabs.add(createTitle("机械化"));
+		tabs.add(createTitle("医学"));
+		tabs.add(createTitle("艺术"));
+		tabs.add(createTitle("地理"));
+		moreSlidingTabStrip.addTabs(tabs);
+		moreSlidingTabStrip.setIndicatorColor(getResources().getColor(R.color.theme));
+		moreSlidingTabStrip.setUnderlineColor(getResources().getColor(R.color.theme));
+		moreSlidingTabStrip.setViewPager(moreViewPager);
+		
+		/* 初始化第二个SlidingTabStrip */
 		List<View> views2 = new ArrayList<View>();
 		views2.add(getContentView(Colors.SKYBLUE));
 		views2.add(getContentView(Colors.CHOCOLATE));
 		views2.add(getContentView(Colors.CYAN));
 		shaoViewPager.setAdapter(new ViewPagerAdapter(views2));
 		shaoSlidingTabStrip.setViewPager(shaoViewPager);
+		shaoSlidingTabStrip.setIndicatorColor(getResources().getColor(R.color.theme));
+		shaoSlidingTabStrip.setUnderlineColor(getResources().getColor(R.color.theme));
 	}
 
 	private TextView createTitle(String title){
