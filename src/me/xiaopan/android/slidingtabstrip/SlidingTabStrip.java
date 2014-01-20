@@ -2,6 +2,7 @@ package me.xiaopan.android.slidingtabstrip;
 
 import java.util.List;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -76,6 +77,7 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 		}
 	}
 	
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	@Override
 	@SuppressWarnings("deprecation")
 	public void onGlobalLayout() {
