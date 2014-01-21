@@ -4,8 +4,10 @@ import java.util.List;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -20,16 +22,12 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 	private int currentPosition;	//当前位置
 	private int lastOffset;
 	private int lastScrollX = 0;
-	private int indicatorColor = 0xFFFF0000;
-	private int underlineColor = 0xFFFF0000;
-	private int indicatorHeight = 8;
-	private int underlineHeight = 4;
 	private float currentPositionOffset;	//当前位置偏移量
 	private boolean start;
-	private Paint rectPaint;
 	private ViewGroup tabsLayout;	//标题项布局
 	private ViewPager viewPager;	//ViewPager
 	private View currentSelectedTabView;	//当前标题项
+	private Drawable slidingBlockDrawable;	//滑块
 	private OnPageChangeListener onPageChangeListener;	//页面改变监听器
 	
 	public SlidingTabStrip(Context context) {
@@ -46,9 +44,28 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 	 * 初始化
 	 */
 	private void init(){
-		rectPaint = new Paint();
 		setHorizontalScrollBarEnabled(false);	//隐藏横向滑动提示条
 		getViewTreeObserver().addOnGlobalLayoutListener(this);
+	}
+	
+	@Override
+	protected void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
+		/* 绘制滑块 */
+		if(getTabsLayout() != null && getTabsLayout().getChildCount() > 0 && slidingBlockDrawable != null){
+			View currentTab = getTabsLayout().getChildAt(currentPosition);
+			float slidingBlockLeft = currentTab.getLeft();
+			float slidingBlockRight = currentTab.getRight();
+			if (currentPositionOffset > 0f && currentPosition < getTabsLayout().getChildCount() - 1) {
+				View nextTab = getTabsLayout().getChildAt(currentPosition + 1);
+				final float nextTabLeft = nextTab.getLeft();
+				final float nextTabRight = nextTab.getRight();
+				slidingBlockLeft = (currentPositionOffset * nextTabLeft + (1f - currentPositionOffset) * slidingBlockLeft);
+				slidingBlockRight = (currentPositionOffset * nextTabRight + (1f - currentPositionOffset) * slidingBlockRight);
+			}
+			slidingBlockDrawable.setBounds((int)slidingBlockLeft, 0, (int)slidingBlockRight, getHeight());
+			slidingBlockDrawable.draw(canvas);
+		}
 	}
 
 	/**
@@ -61,6 +78,7 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 				getTabsLayout().addView(tabs[w]);
 			}
 			getViewTreeObserver().addOnGlobalLayoutListener(this);
+			requestLayout();
 		}
 	}
 
@@ -74,6 +92,7 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 				getTabsLayout().addView(tabs.get(w));
 			}
 			getViewTreeObserver().addOnGlobalLayoutListener(this);
+			requestLayout();
 		}
 	}
 	
@@ -100,6 +119,10 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 		}
 	}
 	
+	/**
+	 * 获取布局
+	 * @return
+	 */
 	private ViewGroup getTabsLayout(){
 		if(tabsLayout == null){
 			if(getChildCount() > 0){
@@ -171,33 +194,6 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 		}
 	}
 	
-	@Override
-	protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
-
-		if(getTabsLayout() != null && getTabsLayout().getChildCount() > 0){
-			final int height = getHeight();
-			
-			/* 绘制滑块 */
-			View currentTab = getTabsLayout().getChildAt(currentPosition);
-			float lineLeft = currentTab.getLeft();
-			float lineRight = currentTab.getRight();
-			if (currentPositionOffset > 0f && currentPosition < getTabsLayout().getChildCount() - 1) {
-				View nextTab = getTabsLayout().getChildAt(currentPosition + 1);
-				final float nextTabLeft = nextTab.getLeft();
-				final float nextTabRight = nextTab.getRight();
-				lineLeft = (currentPositionOffset * nextTabLeft + (1f - currentPositionOffset) * lineLeft);
-				lineRight = (currentPositionOffset * nextTabRight + (1f - currentPositionOffset) * lineRight);
-			}
-			rectPaint.setColor(indicatorColor);
-			canvas.drawRect(lineLeft, height - indicatorHeight, lineRight, height, rectPaint);
-			
-			/* 绘制下划线 */
-			rectPaint.setColor(underlineColor);
-			canvas.drawRect(0, height - underlineHeight, getTabsLayout().getWidth(), height, rectPaint);
-		}
-	}
-	
 	/**
 	 * 滚动到指定的位置
 	 * @param position
@@ -219,6 +215,11 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 		}
 	}
 	
+	/**
+	 * 获取偏移量
+	 * @param newOffset
+	 * @return
+	 */
 	private int getOffset(int newOffset){
 		if(lastOffset < newOffset){
 			if(start){
@@ -255,14 +256,6 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 	}
 	
 	/**
-	 * 获取Page切换监听器
-	 * @return Page切换监听器
-	 */
-	public OnPageChangeListener getOnPageChangeListener() {
-		return onPageChangeListener;
-	}
-
-	/**
 	 * 设置Page切换监听器
 	 * @param onPageChangeListener Page切换监听器
 	 */
@@ -270,36 +263,21 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 		this.onPageChangeListener = onPageChangeListener;
 	}
 	
-	public int getIndicatorColor() {
-		return indicatorColor;
+	/**
+	 * 设置滑块Drawable
+	 * @param slidingBlockDrawable
+	 */
+	public void setSlidingBlockDrawable(Drawable slidingBlockDrawable) {
+		this.slidingBlockDrawable = slidingBlockDrawable;
 	}
-
-	public void setIndicatorColor(int indicatorColor) {
-		this.indicatorColor = indicatorColor;
-	}
-
-	public int getUnderlineColor() {
-		return underlineColor;
-	}
-
-	public void setUnderlineColor(int underlineColor) {
-		this.underlineColor = underlineColor;
-	}
-
-	public int getIndicatorHeight() {
-		return indicatorHeight;
-	}
-
-	public void setIndicatorHeight(int indicatorHeight) {
-		this.indicatorHeight = indicatorHeight;
-	}
-
-	public int getUnderlineHeight() {
-		return underlineHeight;
-	}
-
-	public void setUnderlineHeight(int underlineHeight) {
-		this.underlineHeight = underlineHeight;
+	
+	public void setUnderlineSlidingBlockDrawable(int underlineColor, int underlineHeight){
+		Bitmap bitmap = Bitmap.createBitmap(10, 10, Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(bitmap);
+		Paint paint = new Paint();
+		paint.setColor(underlineColor);
+		canvas.drawRect(0, bitmap.getHeight() - underlineHeight, bitmap.getWidth(), bitmap.getHeight(), paint);
+//		NinePatch ninePatch = new NinePatch(bitmap, chunk);
 	}
 
 	/**

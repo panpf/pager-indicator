@@ -4,7 +4,10 @@ Android-SlidingTabStrip
 Android sliding tab strip
 
 ##Downloads
-**[android-sliding-tab-strip-1.0.2.jar](https://github.com/xiaopansky/Android-SlidingTabStrip/raw/master/releases/android-sliding-tab-strip-1.0.2.jar)**
+###1.0.3 **[android-sliding-tab-strip-1.0.3.jar](https://github.com/xiaopansky/Android-SlidingTabStrip/raw/master/releases/android-sliding-tab-strip-1.0.3.jar)**
+>* 修改滑块设置方式，改由直接由用户提供Drawable的方式
+
+###1.0.2
 
 ##License
 ```java

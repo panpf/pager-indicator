@@ -58,8 +58,7 @@ public class SlidingTabStripActivity extends Activity {
 		tabs.add(createTitle("艺术"));
 		tabs.add(createTitle("地理"));
 		moreSlidingTabStrip.addTabs(tabs);
-		moreSlidingTabStrip.setIndicatorColor(getResources().getColor(R.color.theme));
-		moreSlidingTabStrip.setUnderlineColor(getResources().getColor(R.color.theme));
+		moreSlidingTabStrip.setSlidingBlockDrawable(getResources().getDrawable(R.drawable.czcp_over));
 		moreSlidingTabStrip.setViewPager(moreViewPager);
 		
 		/* 初始化第二个SlidingTabStrip */
@@ -68,9 +67,8 @@ public class SlidingTabStripActivity extends Activity {
 		views2.add(getContentView(Colors.CHOCOLATE));
 		views2.add(getContentView(Colors.CYAN));
 		shaoViewPager.setAdapter(new ViewPagerAdapter(views2));
+		shaoSlidingTabStrip.setSlidingBlockDrawable(getResources().getDrawable(R.drawable.czcp_over));
 		shaoSlidingTabStrip.setViewPager(shaoViewPager);
-		shaoSlidingTabStrip.setIndicatorColor(getResources().getColor(R.color.theme));
-		shaoSlidingTabStrip.setUnderlineColor(getResources().getColor(R.color.theme));
 	}
 
 	private TextView createTitle(String title){
