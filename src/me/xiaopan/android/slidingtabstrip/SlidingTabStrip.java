@@ -4,9 +4,7 @@ import java.util.List;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
@@ -271,15 +269,6 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 		this.slidingBlockDrawable = slidingBlockDrawable;
 	}
 	
-	public void setUnderlineSlidingBlockDrawable(int underlineColor, int underlineHeight){
-		Bitmap bitmap = Bitmap.createBitmap(10, 10, Bitmap.Config.ARGB_8888);
-		Canvas canvas = new Canvas(bitmap);
-		Paint paint = new Paint();
-		paint.setColor(underlineColor);
-		canvas.drawRect(0, bitmap.getHeight() - underlineHeight, bitmap.getWidth(), bitmap.getHeight(), paint);
-//		NinePatch ninePatch = new NinePatch(bitmap, chunk);
-	}
-
 	/**
 	 * 执行测量，执行完成之后只需调用View的getMeasuredXXX()方法即可获取测量结果
 	 * @param view
