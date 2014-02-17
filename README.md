@@ -2,6 +2,7 @@
 ===============
 
 这是Android上的一个ViewPager滑动导航条组件，主要就是用于配合ViewPager实现滑动的导航条，以容纳无限多的Tab
+
 ![smaple](https://github.com/xiaopansky/Android-SlidingTabStrip/raw/master/docs/sample.png)
 
 ##Features
@@ -24,7 +25,7 @@
 </me.xiaopan.android.slidingtabstrip.SlidingTabStrip>
 ```
 
-### 2.在代码中设置滑块或继续添加Tab并设置ViewPager
+### 2.在代码中设置滑块或继续添加Tab
 ```java
 SlidingTabStrip moreSlidingTabStrip = (SlidingTabStrip) findViewById(R.id.slidingTabStrip_more);
 moreSlidingTabStrip.setSlidingBlockDrawable(getResources().getDrawable(R.drawable.image_sliding_block));
@@ -40,9 +41,8 @@ moreSlidingTabStrip.setViewPager(moreViewPager);
 
 ##Downloads
 **[android-sliding-tab-strip-1.0.4.jar](https://github.com/xiaopansky/Android-SlidingTabStrip/raw/master/releases/android-sliding-tab-strip-1.0.4.jar)**
-**[android-sliding-tab-strip-1.0.4-with-src.jar](https://github.com/xiaopansky/Android-SlidingTabStrip/raw/master/releases/android-sliding-tab-strip-1.0.4-with-src.jar)**
 
-###1.0.2
+**[android-sliding-tab-strip-1.0.4-with-src.jar](https://github.com/xiaopansky/Android-SlidingTabStrip/raw/master/releases/android-sliding-tab-strip-1.0.4-with-src.jar)**
 
 ##License
 ```java
