@@ -1,3 +1,19 @@
+/*
+ * Copyright 2014 Peng fei Pan
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package me.xiaopan.android.slidingtabstrip;
 
 import java.util.List;
@@ -65,15 +81,36 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 			slidingBlockDrawable.draw(canvas);
 		}
 	}
+	
+	/**
+	 * 添加Tab
+	 * @param tabView
+	 * @param index
+	 */
+	public void addTab(View tabView, int index){
+		if(tabView != null){
+			getTabsLayout().addView(tabView, index);
+			getViewTreeObserver().addOnGlobalLayoutListener(this);
+			requestLayout();
+		}
+	}
+	
+	/**
+	 * 添加Tab
+	 * @param tabView
+	 */
+	public void addTab(View tabView){
+		addTab(tabView, -1);
+	}
 
 	/**
 	 * 添加Tab
-	 * @param tabs 可以一次添加多个Tab
+	 * @param tabViews 可以一次添加多个Tab
 	 */
-	public void addTabs(View... tabs) {
-		if(tabs != null && tabs.length > 0 && getTabsLayout() != null){
-			for(int w = 0; w < tabs.length; w++){
-				getTabsLayout().addView(tabs[w]);
+	public void addTab(View... tabViews) {
+		if(tabViews != null && tabViews.length > 0 && getTabsLayout() != null){
+			for(int w = 0; w < tabViews.length; w++){
+				getTabsLayout().addView(tabViews[w]);
 			}
 			getViewTreeObserver().addOnGlobalLayoutListener(this);
 			requestLayout();
@@ -82,12 +119,12 @@ public class SlidingTabStrip extends HorizontalScrollView implements OnPageChang
 
 	/**
 	 * 添加Tab
-	 * @param tabs 可以一次添加多个Tab
+	 * @param tabViews
 	 */
-	public void addTabs(List<View> tabs) {
-		if(tabs != null && tabs.size() > 0 && getTabsLayout() != null){
-			for(int w = 0; w < tabs.size(); w++){
-				getTabsLayout().addView(tabs.get(w));
+	public void addTab(List<View> tabViews) {
+		if(tabViews != null && tabViews.size() > 0 && getTabsLayout() != null){
+			for(int w = 0; w < tabViews.size(); w++){
+				getTabsLayout().addView(tabViews.get(w));
 			}
 			getViewTreeObserver().addOnGlobalLayoutListener(this);
 			requestLayout();

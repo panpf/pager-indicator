@@ -5,8 +5,9 @@
     android:orientation="vertical" >
     <me.xiaopan.android.slidingtabstrip.SlidingTabStrip 
         android:id="@+id/slidingTabStrip_more" 
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content" 
+        android:background="@drawable/image_backg" >
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
 			<TextView style="@style/text_slidingTabTitle" android:text="游戏娱乐"/>            
 			<TextView style="@style/text_slidingTabTitle" android:text="工具"/>            
@@ -17,10 +18,7 @@
         <include layout="@layout/include_shadow_down"/>
     </FrameLayout>
     
-    <me.xiaopan.android.slidingtabstrip.SlidingTabStrip
-        android:id="@+id/slidingTabStrip_shao" 
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content" >
+    <me.xiaopan.android.slidingtabstrip.SlidingTabStrip android:id="@+id/slidingTabStrip_shao" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/image_backg" >
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
 			<TextView style="@style/text_slidingTabTitle" android:text="让政府去腐败"/>            
 			<TextView style="@style/text_slidingTabTitle" android:text="撸吧"/>            

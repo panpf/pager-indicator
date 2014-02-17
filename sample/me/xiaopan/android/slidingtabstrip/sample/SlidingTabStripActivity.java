@@ -57,8 +57,8 @@ public class SlidingTabStripActivity extends Activity {
 		tabs.add(createTitle("医学"));
 		tabs.add(createTitle("艺术"));
 		tabs.add(createTitle("地理"));
-		moreSlidingTabStrip.addTabs(tabs);
-		moreSlidingTabStrip.setSlidingBlockDrawable(getResources().getDrawable(R.drawable.czcp_over));
+		moreSlidingTabStrip.addTab(tabs);
+		moreSlidingTabStrip.setSlidingBlockDrawable(getResources().getDrawable(R.drawable.image_sliding_block));
 		moreSlidingTabStrip.setViewPager(moreViewPager);
 		
 		/* 初始化第二个SlidingTabStrip */
@@ -67,7 +67,7 @@ public class SlidingTabStripActivity extends Activity {
 		views2.add(getContentView(Colors.CHOCOLATE));
 		views2.add(getContentView(Colors.CYAN));
 		shaoViewPager.setAdapter(new ViewPagerAdapter(views2));
-		shaoSlidingTabStrip.setSlidingBlockDrawable(getResources().getDrawable(R.drawable.czcp_over));
+		shaoSlidingTabStrip.setSlidingBlockDrawable(getResources().getDrawable(R.drawable.image_sliding_block));
 		shaoSlidingTabStrip.setViewPager(shaoViewPager);
 	}
 
