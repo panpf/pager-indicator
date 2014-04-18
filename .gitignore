@@ -19,8 +19,8 @@ bin/
 gen/
 
 # Idea files
-.idea/
-*.iml
+.idea/workspace.xml
+#*.iml
 
 # Gradle files
 .gradle/

@@ -1,86 +1,86 @@
 package me.xiaopan.android.slidingtabstrip.sample;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import me.xiaopan.android.slidingtabstrip.R;
-import me.xiaopan.android.slidingtabstrip.SlidingTabStrip;
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import me.xiaopan.android.slidingtabstrip.PagerSlidingTabStrip;
+import me.xiaopan.android.slidingtabstrip.R;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * 带滑动标题的ViewPager
  */
 public class SlidingTabStripActivity extends Activity {
-	private SlidingTabStrip moreSlidingTabStrip;
-	private SlidingTabStrip shaoSlidingTabStrip;
-	private ViewPager moreViewPager;
-	private ViewPager shaoViewPager;
+    private static final int[] colors = new int[]{Colors.SKYBLUE, Colors.CHOCOLATE, Colors.CYAN, Colors.FUCHSIA, Colors.GOLD, Colors.BLUE, Colors.GRAY, Colors.GREEN, Colors.RED, Colors.YELLOW, Colors.GRAY};
+	private PagerSlidingTabStrip pagerSlidingTabStrip1;
+	private PagerSlidingTabStrip pagerSlidingTabStrip2;
+	private PagerSlidingTabStrip pagerSlidingTabStrip3;
+	private PagerSlidingTabStrip pagerSlidingTabStrip4;
+	private ViewPager viewPager1;
+	private ViewPager viewPager2;
+	private ViewPager viewPager3;
+	private ViewPager viewPager4;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sliding_tab_strip);
-		moreSlidingTabStrip = (SlidingTabStrip) findViewById(R.id.slidingTabStrip_more);
-		shaoSlidingTabStrip = (SlidingTabStrip) findViewById(R.id.slidingTabStrip_shao);
-		moreViewPager = (ViewPager) findViewById(R.id.viewPager_more);
-		shaoViewPager = (ViewPager) findViewById(R.id.viewPager_shao);
-		
-		/* 初始化第一个SlidingTabStrip */
-		List<View> views = new ArrayList<View>();
-		views.add(getContentView(Colors.SKYBLUE));
-		views.add(getContentView(Colors.CHOCOLATE));
-		views.add(getContentView(Colors.CYAN));
-		views.add(getContentView(Colors.FUCHSIA));
-		views.add(getContentView(Colors.GOLD));
-		views.add(getContentView(Colors.BLUE));
-		views.add(getContentView(Colors.GRAY));
-		views.add(getContentView(Colors.GREEN));
-		views.add(getContentView(Colors.RED));
-		views.add(getContentView(Colors.YELLOW));
-		views.add(getContentView(Colors.GRAY));
-		moreViewPager.setAdapter(new ViewPagerAdapter(views));
-		moreViewPager.setCurrentItem(3);
-		
-		List<View> tabs = new ArrayList<View>();
-		tabs.add(createTitle("天涯海角"));
-		tabs.add(createTitle("学习"));
-		tabs.add(createTitle("美化"));
-		tabs.add(createTitle("图书"));
-		tabs.add(createTitle("体育"));
-		tabs.add(createTitle("机械化"));
-		tabs.add(createTitle("医学"));
-		tabs.add(createTitle("艺术"));
-		tabs.add(createTitle("地理"));
-		moreSlidingTabStrip.addTab(tabs);
-		moreSlidingTabStrip.setSlidingBlockDrawable(getResources().getDrawable(R.drawable.image_sliding_block));
-		moreSlidingTabStrip.setViewPager(moreViewPager);
-		
-		/* 初始化第二个SlidingTabStrip */
-		List<View> views2 = new ArrayList<View>();
-		views2.add(getContentView(Colors.SKYBLUE));
-		views2.add(getContentView(Colors.CHOCOLATE));
-		views2.add(getContentView(Colors.CYAN));
-		shaoViewPager.setAdapter(new ViewPagerAdapter(views2));
-		shaoSlidingTabStrip.setSlidingBlockDrawable(getResources().getDrawable(R.drawable.image_sliding_block));
-		shaoSlidingTabStrip.setViewPager(shaoViewPager);
+        pagerSlidingTabStrip1 = (PagerSlidingTabStrip) findViewById(R.id.slidingTabStrip_1);
+        pagerSlidingTabStrip2 = (PagerSlidingTabStrip) findViewById(R.id.slidingTabStrip_2);
+        pagerSlidingTabStrip3 = (PagerSlidingTabStrip) findViewById(R.id.slidingTabStrip_3);
+        pagerSlidingTabStrip4 = (PagerSlidingTabStrip) findViewById(R.id.slidingTabStrip_4);
+        viewPager1 = (ViewPager) findViewById(R.id.viewPager_1);
+        viewPager2 = (ViewPager) findViewById(R.id.viewPager_2);
+        viewPager3 = (ViewPager) findViewById(R.id.viewPager_3);
+        viewPager4 = (ViewPager) findViewById(R.id.viewPager_4);
+
+        init(0, pagerSlidingTabStrip1, viewPager1);
+        init(1, pagerSlidingTabStrip2, viewPager2);
+        init(2, pagerSlidingTabStrip3, viewPager3);
+        init(3, pagerSlidingTabStrip4, viewPager4);
 	}
 
-	private TextView createTitle(String title){
-		TextView textView = (TextView) LayoutInflater.from(getBaseContext()).inflate(R.layout.text_slide_title, null);
-		textView.setText(title);
-		textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-		return textView;
-	}
-	
+    private void init(int index, PagerSlidingTabStrip pagerSlidingTabStrip, ViewPager viewPager){
+        int length = pagerSlidingTabStrip.getTabCount();
+        List<View> views = new ArrayList<View>(length);
+        Random random = new Random();
+        for(int w = 0; w < length; w++){
+            views.add(getContentView(colors[Math.abs(random.nextInt())%colors.length]));
+        }
+        viewPager.setAdapter(new ViewPagerAdapter(views));
+        viewPager.setCurrentItem(index<length?index:length);
+        pagerSlidingTabStrip.setViewPager(viewPager);
+    }
+
 	private View getContentView(int color){
 		View view = new View(getBaseContext());
 		view.setBackgroundColor(color);
 		return view;
 	}
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem menuItem = menu.add("Github");
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+            menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("http://github.com/xiaopansky/Android-PagerSlidingTabStrip"));
+        startActivity(intent);
+        return super.onOptionsItemSelected(item);
+    }
 }
