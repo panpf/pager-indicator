@@ -16,6 +16,8 @@
 
 package me.xiaopan.android.slidingtabstrip;
 
+import java.util.List;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -27,8 +29,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-
-import java.util.List;
 
 /**
  * 专为ViewPager定制的滑动选项卡 HOME URL：http://github.com/xiaopansky/Android-PagerSlidingTabStrip

@@ -1,5 +1,13 @@
 package me.xiaopan.android.slidingtabstrip.sample;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import me.xiaopan.android.slidingtabstrip.PagerSlidingTabStrip;
+import me.xiaopan.android.slidingtabstrip.R;
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,12 +17,6 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import me.xiaopan.android.slidingtabstrip.PagerSlidingTabStrip;
-import me.xiaopan.android.slidingtabstrip.R;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 /**
  * 带滑动标题的ViewPager
@@ -67,7 +69,9 @@ public class SlidingTabStripActivity extends Activity {
 		return view;
 	}
 
-    @Override
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	@SuppressLint({ "NewApi", "AlwaysShowAction" })
+	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem menuItem = menu.add("Github");
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){

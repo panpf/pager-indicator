@@ -1,31 +1,31 @@
-#![Logo](https://github.com/xiaopansky/Android-SlidingTabStrip/raw/master/res/drawable-mdpi/ic_launcher.png) Android-SlidingTabStrip
+#![Logo](https://github.com/xiaopansky/Android-PagerSlidingTabStrip/raw/master/res/drawable-mdpi/ic_launcher.png) Android-PagerSlidingTabStrip
 
 这是Android上的一个ViewPager滑动导航条组件，主要就是用于配合ViewPager实现滑动的导航条，以容纳无限多的Tab，最低兼容Android2.2
 
-![smaple](https://github.com/xiaopansky/Android-SlidingTabStrip/raw/master/docs/sample.png)
+![smaple](https://github.com/xiaopansky/Android-PagerSlidingTabStrip/raw/master/docs/sample.png)
 
 ##Features
 >* 当所有的Tab在横向上无法充满整个屏幕的时候，将会根据allowWidthFull参数决定是否调整所有的Item来充满。调整的规则是平均分配每个Tab的宽度，如果某个Tab的最小宽度大于平均宽度，那么其宽度保持不变
 >* 当所有的Tab在横向上能够充满整个屏幕的时候，将会从左到右依次排列
->* 用法简单，支持在布局中直接包含View或者在代码中直接调用SlidingTabStrip.addTab()方法添加
+>* 用法简单，支持在布局中直接包含View或者在代码中直接调用PagerSlidingTabStrip.addTab()方法添加
 
 ##Usage Guide
 
-####1.添加SlidingTabStrip.java到你的项目中
+####1.添加PagerSlidingTabStrip.java到你的项目中
 
 ####2.拷贝属性定义到你的项目的attrs.xml中
 ```xml
-<declare-styleable name="SlidingTabStrip">
+<declare-styleable name="PagerSlidingTabStrip">
     <attr name="slidingBlock" format="reference|color"/>
     <attr name="allowWidthFull" format="boolean"/>
 </declare-styleable>
 ```
->* ``slidingBlock``：指定滑块图片，对应的方法是SlidingTabStrip.setSlidingBlockDrawable(Drawable)
->* ``allowWidthFull``：当所有Tab无法充满SlidingTabStrip时是否自动调整所有Tab的宽度来达到充满的目的，对应的方式是SlidingTabStrip.setAllowWidthFull(boolean)
+>* ``slidingBlock``：指定滑块图片，对应的方法是PagerSlidingTabStrip.setSlidingBlockDrawable(Drawable)
+>* ``allowWidthFull``：当所有Tab无法充满PagerSlidingTabStrip时是否自动调整所有Tab的宽度来达到充满的目的，对应的方式是PagerSlidingTabStrip.setAllowWidthFull(boolean)
 
-####3.在布局中引用SlidingTabStrip
+####3.在布局中引用PagerSlidingTabStrip
 ```xml
-<me.xiaopan.android.slidingtabstrip.SlidingTabStrip
+<me.xiaopan.android.slidingtabstrip.PagerSlidingTabStrip
     android:id="@+id/slidingTabStrip_2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -38,19 +38,19 @@
         <TextView style="@style/text_slidingTabTitle" android:text="分类"/>
         <TextView style="@style/text_slidingTabTitle" android:text="管理"/>
     </LinearLayout>
-</me.xiaopan.android.slidingtabstrip.SlidingTabStrip>
+</me.xiaopan.android.slidingtabstrip.PagerSlidingTabStrip>
 ```
 效果图如下：
 
-![smaple](https://github.com/xiaopansky/Android-SlidingTabStrip/raw/master/docs/sample2.png)
+![smaple](https://github.com/xiaopansky/Android-PagerSlidingTabStrip/raw/master/docs/sample2.png)
 
-你还可以在代码中通过SlidingTabStrip.addTab()方法添加Tab
+你还可以在代码中通过PagerSlidingTabStrip.addTab()方法添加Tab
 
 ####4.设置ViewPager
 ```java
 ViewPager moreViewPager = (ViewPager) findViewById(R.id.viewPager);
 moreViewPager.setAdapter(...);
-moreSlidingTabStrip.setViewPager(moreViewPager);
+pagerSlidingTabStrip.setViewPager(moreViewPager);
 ```
 注意：
 >* 在调用setViewPager(ViewPager)方法之前要先设置ViewPager的Adapter
