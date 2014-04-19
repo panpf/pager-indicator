@@ -25,3 +25,6 @@ gen/
 # Gradle files
 .gradle/
 build/
+
+# Proguard files
+proguard_logs/
