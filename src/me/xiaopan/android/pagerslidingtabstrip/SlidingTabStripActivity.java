@@ -1,11 +1,10 @@
-package me.xiaopan.android.slidingtabstrip.sample;
+package me.xiaopan.android.pagerslidingtabstrip;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import me.xiaopan.android.slidingtabstrip.PagerSlidingTabStrip;
-import me.xiaopan.android.slidingtabstrip.R;
+import me.xiaopan.android.pagerslidingtabstrip.R;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -22,7 +21,7 @@ import android.view.View;
  * 带滑动标题的ViewPager
  */
 public class SlidingTabStripActivity extends Activity {
-    private static final int[] colors = new int[]{Colors.SKYBLUE, Colors.CHOCOLATE, Colors.CYAN, Colors.FUCHSIA, Colors.GOLD, Colors.BLUE, Colors.GRAY, Colors.GREEN, Colors.RED, Colors.YELLOW, Colors.GRAY};
+    private static final int[] colors = new int[]{Colors.SKYBLUE, Colors.CHOCOLATE, Colors.CYAN, Colors.FUCHSIA, Colors.GOLD, Colors.BLUE, Colors.GREEN, Colors.RED, Colors.YELLOW, Colors.GRAY};
 	private PagerSlidingTabStrip pagerSlidingTabStrip1;
 	private PagerSlidingTabStrip pagerSlidingTabStrip2;
 	private PagerSlidingTabStrip pagerSlidingTabStrip3;

@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package me.xiaopan.android.slidingtabstrip.sample;
+package me.xiaopan.android.pagerslidingtabstrip;
 
 import java.util.List;
 
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * 滑动视图适配器
@@ -31,16 +31,16 @@ public class ViewPagerAdapter extends PagerAdapter {
 		setViewList(viewList);
 	}
 	
-	@Override
-	public void destroyItem(View container, int position, Object object) {
-		((ViewPager) container).removeView(viewList.get(position));
-	}
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        container.removeView(viewList.get(position));
+    }
 
-	@Override
-	public Object instantiateItem(View container, int position) {
-		((ViewPager) container).addView(viewList.get(position), 0);
-		return viewList.get(position);
-	}
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        container.addView(viewList.get(position), 0);
+        return viewList.get(position);
+    }
 
 	@Override
 	public int getCount() {

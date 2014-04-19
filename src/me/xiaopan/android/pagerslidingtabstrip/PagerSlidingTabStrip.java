@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package me.xiaopan.android.slidingtabstrip;
+package me.xiaopan.android.pagerslidingtabstrip;
 
 import java.util.List;
 
