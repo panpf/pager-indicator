@@ -1,8 +1,8 @@
-#![Logo](https://github.com/xiaopansky/Android-PagerSlidingTabStrip/raw/master/res/drawable-mdpi/ic_launcher.png) Android-PagerSlidingTabStrip
+#![Logo](https://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/res/drawable-mdpi/ic_launcher.png) PagerSlidingTabStrip
 
 这是Android上的一个ViewPager滑动导航条组件，主要就是用于配合ViewPager实现滑动的导航条，以容纳无限多的Tab，最低兼容Android2.2
 
-![smaple](https://github.com/xiaopansky/Android-PagerSlidingTabStrip/raw/master/docs/sample_nexus.png)
+![smaple](https://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/docs/sample_nexus.png)
 
 ##Features
 >* 当所有的Tab在横向上无法充满整个屏幕的时候，将会根据allowWidthFull参数决定是否调整所有的Item来充满。调整的规则是平均分配每个Tab的宽度，如果某个Tab的最小宽度大于平均宽度，那么其宽度保持不变
@@ -12,12 +12,12 @@
 ## Sample Application
 [Get it on Google Play](http://play.google.com/store/apps/details?id=me.xiaopan.android.pagerslidingtabstrip)
 
-[Download it on Github](http://github.com/xiaopansky/Android-PagerSlidingTabStrip/raw/master/releases/Android-PagerSlidingTabStrip-1.1.0.apk)
+[Download it on Github](http://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/releases/PagerSlidingTabStrip-1.1.0.apk)
 
 ##Usage Guide
-####1.添加[PagerSlidingTabStrip.java](http://github.com/xiaopansky/Android-PagerSlidingTabStrip/raw/master/src/me/xiaopan/android/pagerslidingtabstrip/PagerSlidingTabStrip.java)到你的项目中
+####1.添加[PagerSlidingTabStrip.java](http://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/src/me/xiaopan/android/pagerslidingtabstrip/PagerSlidingTabStrip.java)到你的项目中
 
-####2.添加[attrs.xml](http://github.com/xiaopansky/Android-PagerSlidingTabStrip/raw/master/res/values/attrs.xml)到你的项目的res/values目录下
+####2.添加[attrs.xml](http://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/res/values/attrs.xml)到你的项目的res/values目录下
 如果你的项目中已经存在attrs.xml文件，那么你可以拷贝属性定义部分代码到你的attrs.xml文件中，代码如下：
 ```xml
 <declare-styleable name="PagerSlidingTabStrip">
@@ -49,7 +49,7 @@
 ```
 效果图如下：
 
-![smaple](https://github.com/xiaopansky/Android-PagerSlidingTabStrip/raw/master/docs/sample2.png)
+![smaple](https://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/docs/sample2.png)
 
 你还可以在代码中通过PagerSlidingTabStrip.addTab()方法添加Tab
 
