@@ -32,28 +32,29 @@ import android.widget.LinearLayout;
 
 /**
  * 专为ViewPager定制的滑动选项卡 HOME URL：http://github.com/xiaopansky/Android-PagerSlidingTabStrip
- * @version 1.1.0
+ * @version 1.1.1
  * @author Peng fei Pan
  */
-public class PagerSlidingTabStrip extends HorizontalScrollView{
+public class PagerSlidingTabStrip extends HorizontalScrollView implements View.OnClickListener {
     private int currentPosition;	//当前位置
-	private int lastOffset;
-	private int lastScrollX = 0;
-	private float currentPositionOffset;	//当前位置偏移量
-	private boolean start;
+    private int lastOffset;
+    private int lastScrollX = 0;
+    private float currentPositionOffset;	//当前位置偏移量
+    private boolean start;
     private boolean allowWidthFull;    // 内容宽度无法充满时，允许自动调整Item的宽度以充满
-	private View currentSelectedTabView;	//当前标题项
-	private Drawable slidingBlockDrawable;	//滑块
-	private ViewPager viewPager;	//ViewPager
-	private ViewGroup tabsLayout;	//标题项布局
-	private OnPageChangeListener onPageChangeListener;	//页面改变监听器
+    private View currentSelectedTabView;	//当前标题项
+    private Drawable slidingBlockDrawable;	//滑块
+    private ViewPager viewPager;	//ViewPager
+    private ViewGroup tabsLayout;	//标题项布局
+    private ViewPager.OnPageChangeListener onPageChangeListener;	//页面改变监听器
+    private OnClickTabListener onClickTabListener;
 
-	public PagerSlidingTabStrip(Context context) {
-		this(context, null);
-	}
-	
-	public PagerSlidingTabStrip(Context context, AttributeSet attrs) {
-		super(context, attrs);
+    public PagerSlidingTabStrip(Context context) {
+        this(context, null);
+    }
+
+    public PagerSlidingTabStrip(Context context, AttributeSet attrs) {
+        super(context, attrs);
         setHorizontalScrollBarEnabled(false);	//隐藏横向滑动提示条
 
         if(attrs != null){
@@ -64,76 +65,106 @@ public class PagerSlidingTabStrip extends HorizontalScrollView{
                 attrsTypedArray.recycle();
             }
         }
-	}
+    }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        // 如果有内容
-        if(getTabsLayout() != null && getTabsLayout().getChildCount() > 0){
-			// 如果宽度未充满就调整所有Item的宽度以充满
-            if((measure(getTabsLayout()).getMeasuredWidth() < r - l) && allowWidthFull){
-                // 计算平均宽度
-                int viewWidth = r - l;
-                int averageWidth = viewWidth /getTabsLayout().getChildCount();
-                int bigTabCount = 0;    // 记录宽度超过平均宽度的tab的个数，待会儿算平均值的时候要减去此数
-                View tabView;
-                for(int w = 0; w < getTabsLayout().getChildCount(); w++){
-                    tabView = getTabsLayout().getChildAt(w);
-                    if(tabView != null && tabView.getMeasuredWidth() > averageWidth){   // 如果当前视图的宽度大于平均宽度，就从总宽度中减去当前视图的宽度
-                        viewWidth -= tabView.getMeasuredWidth();
-                        bigTabCount++;
-                    }
-                }
-                averageWidth = viewWidth /(getTabsLayout().getChildCount() - bigTabCount);				//计算新的平均宽度
+        ViewGroup tabViewGroup = getTabsLayout();
 
-                // 修改宽度小于平均宽度的Item的宽度
-                for(int w = 0; w < getTabsLayout().getChildCount(); w++){
-                    //更新宽度并再次测量让新的宽度生效，要不然文字不会居中
-                    tabView = getTabsLayout().getChildAt(w);
-                    if(tabView != null){
-                        ViewGroup.LayoutParams layoutParams = tabView.getLayoutParams();
-                        if(layoutParams != null){
-                            layoutParams.width = tabView.getMeasuredWidth()<averageWidth?averageWidth:tabView.getMeasuredWidth();
-                            tabView.setLayoutParams(layoutParams);
-                            measure(tabView);
-                        }
-                    }
-                }
-                measure(getTabsLayout());
+        // 如果没有内容
+        if(tabViewGroup == null || tabViewGroup.getChildCount() <= 0){
+            super.onLayout(changed, l, t, r, b);
+            return;
+        }
+
+        int viewWidth = r - l;
+
+        // 如果宽度未充满就调整所有Item的宽度以充满
+        if((measure(tabViewGroup).getMeasuredWidth() < viewWidth) && allowWidthFull){
+            // 视图宽度减去tabViewGroup的内边距和外边距
+            viewWidth -= tabViewGroup.getPaddingLeft();
+            viewWidth -= tabViewGroup.getPaddingRight();
+            if(tabViewGroup.getLayoutParams() instanceof MarginLayoutParams){
+                MarginLayoutParams tabsLayoutParams = (MarginLayoutParams) tabViewGroup.getLayoutParams();
+                viewWidth -= tabsLayoutParams.leftMargin;
+                viewWidth -= tabsLayoutParams.rightMargin;
             }
 
-            // 初始化滑块位置以及选中状态
-            currentPosition = viewPager != null?viewPager.getCurrentItem():0;
-            scrollToChild(currentPosition, 0);	//移动滑块到指定位置
-            selectedTab(currentPosition);	//选中指定位置的TAB
-
-            //给每一个tab设置点击事件，当点击的时候切换Pager
-            for(int w = 0; w < getTabsLayout().getChildCount(); w++){
-                final int index = w;
-                View itemView = getTabsLayout().getChildAt(index);
-                if(itemView != null){
-                    itemView.setOnClickListener(new OnClickListener(){
-                        @Override
-                        public void onClick(View v) {
-                            if(viewPager != null){
-                                viewPager.setCurrentItem(index, true);
-                            }
-                        }
-                    });
+            // 视图宽度再次减去所有Tab的外边距
+            View tabView;
+            for(int w = 0; w < tabViewGroup.getChildCount(); w++){
+                tabView = tabViewGroup.getChildAt(w);
+                if(tabView.getLayoutParams() instanceof MarginLayoutParams){
+                    MarginLayoutParams marginLayoutParams = (MarginLayoutParams) tabView.getLayoutParams();
+                    viewWidth -= marginLayoutParams.leftMargin;
+                    viewWidth -= marginLayoutParams.rightMargin;
                 }
             }
+
+            // 计算平均宽度
+            int averageWidth = viewWidth /tabViewGroup.getChildCount();
+            int bigTabCount = 0;    // 记录宽度超过平均宽度的tab的个数，待会儿算平均值的时候要减去此数
+            for(int w = 0; w < tabViewGroup.getChildCount(); w++){
+                tabView = tabViewGroup.getChildAt(w);
+                // 如果当前视图的宽度大于平均宽度，就从总宽度中减去当前视图的宽度
+                if(tabView != null && tabView.getMeasuredWidth() > averageWidth){
+                    viewWidth -= tabView.getMeasuredWidth();
+                    bigTabCount++;
+                }
+            }
+
+            // 计算新的平均宽度
+            averageWidth = viewWidth /(tabViewGroup.getChildCount() - bigTabCount);
+
+            // 修改宽度小于新的平均宽度的Item的宽度
+            for(int w = 0; w < tabViewGroup.getChildCount(); w++){
+                //更新宽度并再次测量让新的宽度生效，要不然文字不会居中
+                tabView = tabViewGroup.getChildAt(w);
+                if(tabView != null){
+                    ViewGroup.LayoutParams layoutParams = tabView.getLayoutParams();
+                    if(layoutParams != null){
+                        layoutParams.width = tabView.getMeasuredWidth()<averageWidth?averageWidth:tabView.getMeasuredWidth();
+                        tabView.setLayoutParams(layoutParams);
+                        measure(tabView);
+                    }
+                }
+            }
+            measure(tabViewGroup);
+        }
+
+        // 初始化滑块位置以及选中状态
+        currentPosition = viewPager != null?viewPager.getCurrentItem():0;
+        scrollToChild(currentPosition, 0);	//移动滑块到指定位置
+        selectedTab(currentPosition);	//选中指定位置的TAB
+
+        //给每一个tab设置点击事件，当点击的时候切换Pager
+        for(int w = 0; w < tabViewGroup.getChildCount(); w++){
+            View itemView = tabViewGroup.getChildAt(w);
+            itemView.setTag(w);
+            itemView.setOnClickListener(this);
         }
 
         super.onLayout(changed, l, t, r, b);
     }
-	
-	@Override
-	protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
+
+    @Override
+    public void onClick(View v) {
+        int index = (Integer) v.getTag();
+        if(onClickTabListener != null){
+            onClickTabListener.onClickTab(v, index);
+        }
+        if(viewPager != null){
+            viewPager.setCurrentItem(index, true);
+        }
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
 		/* 绘制滑块 */
-		if(getTabsLayout() != null && getTabsLayout().getChildCount() > 0 && slidingBlockDrawable != null){
-			View currentTab = getTabsLayout().getChildAt(currentPosition);
-			if(currentTab != null){
+        if(getTabsLayout() != null && getTabsLayout().getChildCount() > 0 && slidingBlockDrawable != null){
+            View currentTab = getTabsLayout().getChildAt(currentPosition);
+            if(currentTab != null){
                 float slidingBlockLeft = currentTab.getLeft();
                 float slidingBlockRight = currentTab.getRight();
                 if (currentPositionOffset > 0f && currentPosition < getTabsLayout().getChildCount() - 1) {
@@ -148,8 +179,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView{
                 slidingBlockDrawable.setBounds((int)slidingBlockLeft, 0, (int)slidingBlockRight, getHeight());
                 slidingBlockDrawable.draw(canvas);
             }
-		}
-	}
+        }
+    }
 
     /**
      * 获取布局
@@ -166,13 +197,13 @@ public class PagerSlidingTabStrip extends HorizontalScrollView{
         }
         return tabsLayout;
     }
-	
-	/**
-	 * 滚动到指定的位置
-	 */
-	private void scrollToChild(int position, int offset) {
-		if(getTabsLayout() != null && getTabsLayout().getChildCount() > 0 && position< getTabsLayout().getChildCount()){
-			View view = getTabsLayout().getChildAt(position);
+
+    /**
+     * 滚动到指定的位置
+     */
+    private void scrollToChild(int position, int offset) {
+        if(getTabsLayout() != null && getTabsLayout().getChildCount() > 0 && position< getTabsLayout().getChildCount()){
+            View view = getTabsLayout().getChildAt(position);
             if(view != null){
                 //计算新的X坐标
                 int newScrollX = view.getLeft() + offset;
@@ -186,14 +217,14 @@ public class PagerSlidingTabStrip extends HorizontalScrollView{
                     scrollTo(newScrollX, 0);
                 }
             }
-		}
-	}
-	
-	/**
-	 * 获取偏移量
-	 */
-	private int getOffset(int newOffset){
-		if(lastOffset < newOffset){
+        }
+    }
+
+    /**
+     * 获取偏移量
+     */
+    private int getOffset(int newOffset){
+        if(lastOffset < newOffset){
             if(start){
                 lastOffset += 1;
                 return lastOffset;
@@ -216,7 +247,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView{
             lastOffset = newOffset;
             return lastOffset;
         }
-	}
+    }
 
     /**
      * 执行测量，执行完成之后只需调用View的getMeasuredXXX()方法即可获取测量结果
@@ -295,13 +326,13 @@ public class PagerSlidingTabStrip extends HorizontalScrollView{
         }
     }
 
-	/**
-	 * 设置ViewPager
-	 * @param viewPager ViewPager
-	 */
-	public void setViewPager(ViewPager viewPager) {
-		this.viewPager = viewPager;
-		this.viewPager.setOnPageChangeListener(new OnPageChangeListener() {
+    /**
+     * 设置ViewPager
+     * @param viewPager ViewPager
+     */
+    public void setViewPager(ViewPager viewPager) {
+        this.viewPager = viewPager;
+        this.viewPager.setOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 selectedTab(position);
@@ -334,15 +365,15 @@ public class PagerSlidingTabStrip extends HorizontalScrollView{
             }
         });
         requestLayout();
-	}
-	
-	/**
-	 * 设置Page切换监听器
-	 * @param onPageChangeListener Page切换监听器
-	 */
-	public void setOnPageChangeListener(OnPageChangeListener onPageChangeListener) {
-		this.onPageChangeListener = onPageChangeListener;
-	}
+    }
+
+    /**
+     * 设置Page切换监听器
+     * @param onPageChangeListener Page切换监听器
+     */
+    public void setOnPageChangeListener(OnPageChangeListener onPageChangeListener) {
+        this.onPageChangeListener = onPageChangeListener;
+    }
 
     /**
      * 设置是否充满屏幕
@@ -354,17 +385,34 @@ public class PagerSlidingTabStrip extends HorizontalScrollView{
     }
 
     /**
-	 * 设置滑块图片
-	 */
-	public void setSlidingBlockDrawable(Drawable slidingBlockDrawable) {
-		this.slidingBlockDrawable = slidingBlockDrawable;
+     * 设置滑块图片
+     */
+    public void setSlidingBlockDrawable(Drawable slidingBlockDrawable) {
+        this.slidingBlockDrawable = slidingBlockDrawable;
         requestLayout();
-	}
+    }
 
     /**
      * 获取Tab总数
      */
     public int getTabCount(){
         return getTabsLayout()!=null?getTabsLayout().getChildCount():0;
+    }
+
+    /**
+     * 设置Tab点击监听器
+     * @param onClickTabListener
+     */
+    public void setOnClickTabListener(OnClickTabListener onClickTabListener) {
+        this.onClickTabListener = onClickTabListener;
+    }
+
+    /**
+     * Tab点击监听器
+     * @author xiaopan
+     *
+     */
+    public interface OnClickTabListener {
+        public void onClickTab(View tab, int index);
     }
 }

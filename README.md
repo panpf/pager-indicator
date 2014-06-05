@@ -269,6 +269,10 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
 更详尽的代码请下载源码直接用Eclipse或IDEA导入查看
 
 ##Change Log
+###1.1.1
+>* 增肌对Tab以及TabLayout内边距或外边距的支持
+>* 增加Tab点击监听器，通过setClickTabListener()方法即可监听Tab点击
+
 ###1.1.0
 >* 增加slidingBlock和allowWidthFull自定义参数
 >* 增加布局预览支持，如此一来之前的使用方式就作废了
