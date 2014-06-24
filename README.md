@@ -2,6 +2,8 @@
 
 这是Android上的一个ViewPager滑动导航条组件，主要就是用于配合ViewPager实现滑动的导航条，以容纳无限多的Tab
 
+![smaple](https://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/docs/sample_nexus.png)
+
 ##Features
 >* 当所有的Tab在横向上无法充满整个屏幕的时候，将会根据allowWidthFull参数决定是否调整所有的Item来充满。调整的规则是平均分配每个Tab的宽度，如果某个Tab的最小宽度大于平均宽度，那么其宽度保持不变
 >* 当所有的Tab在横向上能够充满整个屏幕的时候，将会从左到右依次排列
