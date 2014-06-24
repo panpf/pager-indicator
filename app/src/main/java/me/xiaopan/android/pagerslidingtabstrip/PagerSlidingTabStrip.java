@@ -159,9 +159,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
             // 初始化滑块位置以及选中状态
             currentPosition = viewPager != null?viewPager.getCurrentItem():0;
             scrollToChild(currentPosition, 0);	//移动滑块到指定位置
-            if(viewPager != null){
-                selectedTab(currentPosition);	//选中指定位置的TAB
-            }
+            selectedTab(currentPosition);	//选中指定位置的TAB
 
             //给每一个tab设置点击事件，当点击的时候切换Pager
             for(int w = 0; w < tabViewGroup.getChildCount(); w++){
@@ -187,13 +185,14 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 		/* 绘制滑块 */
-        if(getTabsLayout() != null && getTabsLayout().getChildCount() > 0 && slidingBlockDrawable != null){
-            View currentTab = getTabsLayout().getChildAt(currentPosition);
+        ViewGroup tabsLayout = getTabsLayout();
+        if(tabsLayout != null && tabsLayout.getChildCount() > 0 && slidingBlockDrawable != null){
+            View currentTab = tabsLayout.getChildAt(currentPosition);
             if(currentTab != null){
                 float slidingBlockLeft = currentTab.getLeft();
                 float slidingBlockRight = currentTab.getRight();
-                if (currentPositionOffset > 0f && currentPosition < getTabsLayout().getChildCount() - 1) {
-                    View nextTab = getTabsLayout().getChildAt(currentPosition + 1);
+                if (currentPositionOffset > 0f && currentPosition < tabsLayout.getChildCount() - 1) {
+                    View nextTab = tabsLayout.getChildAt(currentPosition + 1);
                     if(nextTab != null){
                         final float nextTabLeft = nextTab.getLeft();
                         final float nextTabRight = nextTab.getRight();
@@ -229,7 +228,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
     private void scrollToChild(int position, int offset) {
         ViewGroup tabsLayout = getTabsLayout();
         if(tabsLayout != null && tabsLayout.getChildCount() > 0 && position < tabsLayout.getChildCount()){
-            View view = getTabsLayout().getChildAt(position);
+            View view = tabsLayout.getChildAt(position);
             if(view != null){
                 //计算新的X坐标
                 int newScrollX = view.getLeft() + offset;
@@ -279,11 +278,12 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
      * 选中指定位置的TAB
      */
     private void selectedTab(int currentSelectedTabPosition){
-        if(currentSelectedTabPosition > -1 && getTabsLayout() != null && currentSelectedTabPosition < getTabsLayout().getChildCount()){
+        ViewGroup tabsLayout = getTabsLayout();
+        if(currentSelectedTabPosition > -1 && tabsLayout != null && currentSelectedTabPosition < tabsLayout.getChildCount()){
             if(currentSelectedTabView != null){
                 currentSelectedTabView.setSelected(false);
             }
-            currentSelectedTabView = getTabsLayout().getChildAt(currentSelectedTabPosition);
+            currentSelectedTabView = tabsLayout.getChildAt(currentSelectedTabPosition);
             if(currentSelectedTabView != null){
                 currentSelectedTabView.setSelected(true);
             }
@@ -312,7 +312,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
      * @param tabViews 可以一次添加多个Tab
      */
     public void addTab(View... tabViews) {
-        if(tabViews != null && getTabsLayout() != null){
+        if(tabViews != null){
             for(View view : tabViews){
                 getTabsLayout().addView(view);
             }
@@ -324,7 +324,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
      * 添加Tab
      */
     public void addTab(List<View> tabViews) {
-        if(tabViews != null && tabViews.size() > 0 && getTabsLayout() != null){
+        if(tabViews != null){
             for(View view : tabViews){
                 getTabsLayout().addView(view);
             }
@@ -349,8 +349,9 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
 
             @Override
             public void onPageScrolled(int nextPagePosition, float positionOffset, int positionOffsetPixels) {
-                if(nextPagePosition < getTabsLayout().getChildCount()){
-                    View view = getTabsLayout().getChildAt(nextPagePosition);
+                ViewGroup tabsLayout = getTabsLayout();
+                if(nextPagePosition < tabsLayout.getChildCount()){
+                    View view = tabsLayout.getChildAt(nextPagePosition);
                     if(view != null){
                         currentPosition = nextPagePosition;
                         currentPositionOffset = positionOffset;
@@ -402,12 +403,13 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
      * 获取Tab总数
      */
     public int getTabCount(){
-        return getTabsLayout()!=null?getTabsLayout().getChildCount():0;
+        ViewGroup tabsLayout = getTabsLayout();
+        return tabsLayout!=null?tabsLayout.getChildCount():0;
     }
 
     /**
      * 设置Tab点击监听器
-     * @param onClickTabListener
+     * @param onClickTabListener Tab点击监听器
      */
     public void setOnClickTabListener(OnClickTabListener onClickTabListener) {
         this.onClickTabListener = onClickTabListener;
