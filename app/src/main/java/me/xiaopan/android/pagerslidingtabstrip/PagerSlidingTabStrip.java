@@ -88,7 +88,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
             tabViews.add(tabsLayout.getChildAt(w));
         }
 
-        adjustChildWidthWithParent(tabViews, getMeasuredWidth()-getPaddingLeft()-getPaddingRight(), widthMeasureSpec, heightMeasureSpec);
+        adjustChildWidthWithParent(tabViews, getMeasuredWidth()-tabsLayout.getPaddingLeft()-tabsLayout.getPaddingRight(), widthMeasureSpec, heightMeasureSpec);
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
