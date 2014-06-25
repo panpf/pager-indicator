@@ -34,7 +34,7 @@ import java.util.List;
 
 /**
  * 专为ViewPager定制的滑动选项卡 HOME URL：http://github.com/xiaopansky/Android-PagerSlidingTabStrip
- * @version 1.2.0
+ * @version 1.3.0
  * @author Peng fei Pan
  */
 public class PagerSlidingTabStrip extends HorizontalScrollView implements View.OnClickListener {
@@ -44,6 +44,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
     private float currentPositionOffset;	//当前位置偏移量
     private boolean start;
     private boolean allowWidthFull;    // 内容宽度无法充满时，允许自动调整Item的宽度以充满
+    private boolean disableViewPager;   // 禁用ViewPager
     private View currentSelectedTabView;	//当前标题项
     private Drawable slidingBlockDrawable;	//滑块
     private ViewPager viewPager;	//ViewPager
@@ -65,6 +66,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
             if(attrsTypedArray != null){
                 allowWidthFull = attrsTypedArray.getBoolean(R.styleable.PagerSlidingTabStrip_allowWidthFull, false);
                 slidingBlockDrawable = attrsTypedArray.getDrawable(R.styleable.PagerSlidingTabStrip_slidingBlock);
+                disableViewPager = attrsTypedArray.getBoolean(R.styleable.PagerSlidingTabStrip_disableViewPager, false);
                 attrsTypedArray.recycle();
             }
         }
@@ -158,8 +160,10 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
         if(tabViewGroup != null){
             // 初始化滑块位置以及选中状态
             currentPosition = viewPager != null?viewPager.getCurrentItem():0;
-            scrollToChild(currentPosition, 0);	//移动滑块到指定位置
-            selectedTab(currentPosition);	//选中指定位置的TAB
+            if(!disableViewPager){
+                scrollToChild(currentPosition, 0);	//移动滑块到指定位置
+                selectedTab(currentPosition);	//选中指定位置的TAB
+            }
 
             //给每一个tab设置点击事件，当点击的时候切换Pager
             for(int w = 0; w < tabViewGroup.getChildCount(); w++){
@@ -184,6 +188,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        if(disableViewPager) return;
 		/* 绘制滑块 */
         ViewGroup tabsLayout = getTabsLayout();
         if(tabsLayout != null && tabsLayout.getChildCount() > 0 && slidingBlockDrawable != null){
@@ -337,6 +342,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
      * @param viewPager ViewPager
      */
     public void setViewPager(ViewPager viewPager) {
+        if(disableViewPager) return;
         this.viewPager = viewPager;
         this.viewPager.setOnPageChangeListener(new OnPageChangeListener() {
             @Override
@@ -357,10 +363,10 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
                         currentPositionOffset = positionOffset;
                         scrollToChild(nextPagePosition, (int) (positionOffset * view.getWidth()));
                         invalidate();
-                        if(onPageChangeListener != null){
-                            onPageChangeListener.onPageScrolled(nextPagePosition, positionOffset, positionOffsetPixels);
-                        }
                     }
+                }
+                if(onPageChangeListener != null){
+                    onPageChangeListener.onPageScrolled(nextPagePosition, positionOffset, positionOffsetPixels);
                 }
             }
 
@@ -413,6 +419,19 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
      */
     public void setOnClickTabListener(OnClickTabListener onClickTabListener) {
         this.onClickTabListener = onClickTabListener;
+    }
+
+    /**
+     * 设置不使用ViewPager
+     * @param disableViewPager 不使用ViewPager
+     */
+    public void setDisableViewPager(boolean disableViewPager) {
+        this.disableViewPager = disableViewPager;
+        if(viewPager != null){
+            viewPager.setOnPageChangeListener(onPageChangeListener);
+            viewPager = null;
+        }
+        requestLayout();
     }
 
     /**

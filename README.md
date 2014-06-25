@@ -22,11 +22,13 @@
 <declare-styleable name="PagerSlidingTabStrip">
     <attr name="slidingBlock" format="reference|color"/>
     <attr name="allowWidthFull" format="boolean"/>
+    <attr name="disableViewPager" format="boolean"/>
 </declare-styleable>
 ```
 属性释义：
 >* ``slidingBlock``：指定滑块图片，对应的方法是PagerSlidingTabStrip.setSlidingBlockDrawable(Drawable)
 >* ``allowWidthFull``：当所有Tab无法充满PagerSlidingTabStrip时是否自动调整所有Tab的宽度来达到充满的目的，对应的方式是PagerSlidingTabStrip.setAllowWidthFull(boolean)
+>* ``disableViewPager``：禁用ViewPager，禁用后不会有初始选中状态效果，也不会绘制滑块，你调用setViewPager()方法也不会起作用
 
 ####3.在布局中引用PagerSlidingTabStrip
 ```xml
@@ -268,6 +270,9 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
 更详尽的代码请下载源码请使用Android Studio导入查看
 
 ##Change Log
+###1.3.0
+>* 增加disableViewPager参数
+
 ###1.2.0
 >* 修改调整Tab宽度的时机，以前是在onLayout()方法中，现在是在onMeasure()方法中
 
