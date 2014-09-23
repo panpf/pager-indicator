@@ -4,5 +4,6 @@
         <attr name="slidingBlock" format="reference|color"/>
         <attr name="allowWidthFull" format="boolean"/>
         <attr name="disableViewPager" format="boolean"/>
+        <attr name="disableTensileSlidingBlock" format="boolean"/>
     </declare-styleable>
 </resources>

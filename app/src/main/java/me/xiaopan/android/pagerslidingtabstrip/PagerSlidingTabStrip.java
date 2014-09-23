@@ -53,6 +53,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
     private ViewPager.OnPageChangeListener onPageChangeListener;	//页面改变监听器
     private OnClickTabListener onClickTabListener;
     private List<View> tabViews;
+    private boolean disableTensileSlidingBlock; // 禁止拉伸滑块图片
 
     public PagerSlidingTabStrip(Context context) {
         this(context, null);
@@ -68,6 +69,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
                 allowWidthFull = attrsTypedArray.getBoolean(R.styleable.PagerSlidingTabStrip_allowWidthFull, false);
                 slidingBlockDrawable = attrsTypedArray.getDrawable(R.styleable.PagerSlidingTabStrip_slidingBlock);
                 disableViewPager = attrsTypedArray.getBoolean(R.styleable.PagerSlidingTabStrip_disableViewPager, false);
+                disableTensileSlidingBlock = attrsTypedArray.getBoolean(R.styleable.PagerSlidingTabStrip_disableTensileSlidingBlock, false);
                 attrsTypedArray.recycle();
             }
         }
@@ -206,6 +208,14 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
                         slidingBlockRight = (currentPositionOffset * nextTabRight + (1f - currentPositionOffset) * slidingBlockRight);
                     }
                 }
+
+                // 不拉伸
+                if(disableTensileSlidingBlock){
+                    int center = (int) (slidingBlockLeft + (slidingBlockRight-slidingBlockLeft)/2);
+                    slidingBlockLeft = center - slidingBlockDrawable.getIntrinsicWidth()/2;
+                    slidingBlockRight = center + slidingBlockDrawable.getIntrinsicWidth()/2;
+                }
+
                 slidingBlockDrawable.setBounds((int)slidingBlockLeft, getHeight()-slidingBlockDrawable.getIntrinsicHeight(), (int)slidingBlockRight, getHeight());
                 slidingBlockDrawable.draw(canvas);
             }
@@ -374,7 +384,6 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
 
             @Override
             public void onPageScrolled(int nextPagePosition, float positionOffset, int positionOffsetPixels) {
-                Log.d("PagerSlidingTabStrip", "nextPagePosition="+nextPagePosition+"; positionOffset="+positionOffset+"; positionOffsetPixels="+positionOffsetPixels);
                 ViewGroup tabsLayout = getTabsLayout();
                 if(nextPagePosition < tabsLayout.getChildCount()){
                     View view = tabsLayout.getChildAt(nextPagePosition);
@@ -392,7 +401,6 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
 
             @Override
             public void onPageScrollStateChanged(int arg0) {
-                Log.d("PagerSlidingTabStrip", "PageScrollStateChanged="+arg0);
                 if(onPageChangeListener != null){
                     onPageChangeListener.onPageScrollStateChanged(arg0);
                 }
