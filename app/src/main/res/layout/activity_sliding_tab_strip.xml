@@ -11,7 +11,7 @@
 	    android:layout_weight="1"
         android:background="#0000ff"
 	    android:orientation="vertical">
-        <me.xiaopan.android.pagerslidingtabstrip.PagerSlidingTabStrip
+        <me.xiaopan.android.widget.PagerSlidingTabStrip
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/slidingTabStrip_1"
@@ -66,7 +66,7 @@
 	                style="@style/text_slidingTabTitle"
 	                android:text="使命召唤"/>
             </LinearLayout>
-        </me.xiaopan.android.pagerslidingtabstrip.PagerSlidingTabStrip>
+        </me.xiaopan.android.widget.PagerSlidingTabStrip>
 
         <FrameLayout
 	        android:layout_width="match_parent"
@@ -86,7 +86,7 @@
 	    android:layout_height="0dp"
 	    android:layout_weight="1"
 	    android:orientation="vertical">
-        <me.xiaopan.android.pagerslidingtabstrip.PagerSlidingTabStrip
+        <me.xiaopan.android.widget.PagerSlidingTabStrip
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/slidingTabStrip_2"
@@ -109,7 +109,7 @@
 	                style="@style/text_slidingTabTitle"
 	                android:text="管理"/>
             </LinearLayout>
-        </me.xiaopan.android.pagerslidingtabstrip.PagerSlidingTabStrip>
+        </me.xiaopan.android.widget.PagerSlidingTabStrip>
 
         <FrameLayout
 	        android:layout_width="match_parent"
@@ -129,7 +129,7 @@
 	    android:layout_height="0dp"
 	    android:layout_weight="1"
 	    android:orientation="vertical">
-        <me.xiaopan.android.pagerslidingtabstrip.PagerSlidingTabStrip
+        <me.xiaopan.android.widget.PagerSlidingTabStrip
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/slidingTabStrip_3"
@@ -147,7 +147,7 @@
 	                style="@style/text_slidingTabTitle"
 	                android:text="攻略"/>
             </LinearLayout>
-        </me.xiaopan.android.pagerslidingtabstrip.PagerSlidingTabStrip>
+        </me.xiaopan.android.widget.PagerSlidingTabStrip>
 
         <FrameLayout
 	        android:layout_width="match_parent"
@@ -167,7 +167,7 @@
 	    android:layout_height="0dp"
 	    android:layout_weight="1"
 	    android:orientation="vertical">
-        <me.xiaopan.android.pagerslidingtabstrip.PagerSlidingTabStrip
+        <me.xiaopan.android.widget.PagerSlidingTabStrip
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/slidingTabStrip_4"
@@ -183,7 +183,7 @@
 	                style="@style/text_slidingTabTitle"
 	                android:text="发现"/>
             </LinearLayout>
-        </me.xiaopan.android.pagerslidingtabstrip.PagerSlidingTabStrip>
+        </me.xiaopan.android.widget.PagerSlidingTabStrip>
 
         <FrameLayout
 	        android:layout_width="match_parent"

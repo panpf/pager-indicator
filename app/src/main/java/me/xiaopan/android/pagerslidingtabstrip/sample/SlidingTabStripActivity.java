@@ -16,8 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import me.xiaopan.android.pagerslidingtabstrip.PagerSlidingTabStrip;
-import me.xiaopan.android.pagerslidingtabstrip.R;
+import me.xiaopan.android.widget.PagerSlidingTabStrip;
 
 /**
  * 带滑动标题的ViewPager

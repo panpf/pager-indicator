@@ -8,13 +8,15 @@
 >* 当所有的Tab在横向上无法充满整个屏幕的时候，将会根据allowWidthFull参数决定是否调整所有的Item来充满。调整的规则是平均分配每个Tab的宽度，如果某个Tab的最小宽度大于平均宽度，那么其宽度保持不变
 >* 当所有的Tab在横向上能够充满整个屏幕的时候，将会从左到右依次排列
 >* 用法简单，支持在布局中直接包含View或者在代码中直接调用PagerSlidingTabStrip.addTab()方法添加
+>* Tab View支持设置外边距
+>* 支持通过disableTensileSlidingBlock属性设置是否拉伸滑块图片
 
 ## Sample App
 >* [Get it on Google Play](http://play.google.com/store/apps/details?id=me.xiaopan.android.pagerslidingtabstrip)
 >* [Download it on Github](http://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/releases/PagerSlidingTabStrip-1.1.0.apk)
 
 ##Usage Guide
-####1.添加[PagerSlidingTabStrip.java](http://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/app/src/main/java/me/xiaopan/android/pagerslidingtabstrip/PagerSlidingTabStrip.java)到你的项目中
+####1.添加[PagerSlidingTabStrip.java](http://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/app/src/main/java/me/xiaopan/android/widget/PagerSlidingTabStrip.java)到你的项目中
 
 ####2.添加[attrs.xml](http://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/app/src/main/res/values/attrs.xml)到你的项目的res/values目录下
 如果你的项目中已经存在attrs.xml文件，那么你可以拷贝属性定义部分代码到你的attrs.xml文件中，代码如下：
@@ -23,16 +25,18 @@
     <attr name="slidingBlock" format="reference|color"/>
     <attr name="allowWidthFull" format="boolean"/>
     <attr name="disableViewPager" format="boolean"/>
+    <attr name="disableTensileSlidingBlock" format="boolean"/>
 </declare-styleable>
 ```
 属性释义：
 >* ``slidingBlock``：指定滑块图片，对应的方法是PagerSlidingTabStrip.setSlidingBlockDrawable(Drawable)
 >* ``allowWidthFull``：当所有Tab无法充满PagerSlidingTabStrip时是否自动调整所有Tab的宽度来达到充满的目的，对应的方式是PagerSlidingTabStrip.setAllowWidthFull(boolean)
 >* ``disableViewPager``：禁用ViewPager，禁用后不会有初始选中状态效果，也不会绘制滑块，你调用setViewPager()方法也不会起作用
+>* ``disableTensileSlidingBlock``：禁止拉伸滑块图片
 
 ####3.在布局中引用PagerSlidingTabStrip
 ```xml
-<me.xiaopan.android.pagerslidingtabstrip.PagerSlidingTabStrip
+<me.xiaopan.android.widget.PagerSlidingTabStrip
     xmlns:app="http://schemas.android.com/apk/res/你的包名"
     android:id="@+id/slidingTabStrip_2"
     android:layout_width="match_parent"
@@ -46,7 +50,7 @@
         <TextView style="@style/text_slidingTabTitle" android:text="分类"/>
         <TextView style="@style/text_slidingTabTitle" android:text="管理"/>
     </LinearLayout>
-</me.xiaopan.android.pagerslidingtabstrip.PagerSlidingTabStrip>
+</me.xiaopan.android.widget.PagerSlidingTabStrip>
 ```
 效果图如下：
 
@@ -79,7 +83,7 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
         android:layout_height="0dp" 
         android:layout_weight="1" 
         android:orientation="vertical">
-        <me.xiaopan.android.pagerslidingtabstrip.PagerSlidingTabStrip
+        <me.xiaopan.android.widget.PagerSlidingTabStrip
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/slidingTabStrip_1"
@@ -134,7 +138,7 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
                     style="@style/text_slidingTabTitle" 
                     android:text="使命召唤"/>
             </LinearLayout>
-        </me.xiaopan.android.pagerslidingtabstrip.PagerSlidingTabStrip>
+        </me.xiaopan.android.widget.PagerSlidingTabStrip>
 
         <FrameLayout 
             android:layout_width="match_parent" 
@@ -153,7 +157,7 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
         android:layout_height="0dp" 
         android:layout_weight="1" 
         android:orientation="vertical">
-        <me.xiaopan.android.pagerslidingtabstrip.PagerSlidingTabStrip
+        <me.xiaopan.android.widget.PagerSlidingTabStrip
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/slidingTabStrip_2"
@@ -176,7 +180,7 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
                     style="@style/text_slidingTabTitle" 
                     android:text="管理"/>
             </LinearLayout>
-        </me.xiaopan.android.pagerslidingtabstrip.PagerSlidingTabStrip>
+        </me.xiaopan.android.widget.PagerSlidingTabStrip>
 
         <FrameLayout 
             android:layout_width="match_parent" 
@@ -196,7 +200,7 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
         android:layout_height="0dp" 
         android:layout_weight="1" 
         android:orientation="vertical">
-        <me.xiaopan.android.pagerslidingtabstrip.PagerSlidingTabStrip
+        <me.xiaopan.android.widget.PagerSlidingTabStrip
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/slidingTabStrip_3"
@@ -214,7 +218,7 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
                     style="@style/text_slidingTabTitle" 
                     android:text="攻略"/>
             </LinearLayout>
-        </me.xiaopan.android.pagerslidingtabstrip.PagerSlidingTabStrip>
+        </me.xiaopan.android.widget.PagerSlidingTabStrip>
 
         <FrameLayout 
             android:layout_width="match_parent" 
@@ -234,7 +238,7 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
         android:layout_height="0dp" 
         android:layout_weight="1" 
         android:orientation="vertical">
-        <me.xiaopan.android.pagerslidingtabstrip.PagerSlidingTabStrip
+        <me.xiaopan.android.widget.PagerSlidingTabStrip
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/slidingTabStrip_4"
@@ -250,7 +254,7 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
                     style="@style/text_slidingTabTitle" 
                     android:text="发现"/>
             </LinearLayout>
-        </me.xiaopan.android.pagerslidingtabstrip.PagerSlidingTabStrip>
+        </me.xiaopan.android.widget.PagerSlidingTabStrip>
 
         <FrameLayout 
             android:layout_width="match_parent" 
@@ -270,6 +274,10 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
 更详尽的代码请下载源码请使用Android Studio导入查看
 
 ##Change Log
+###1.4.0
+>* 支持Tab View设置外边距
+>* 支持禁止拉伸滑块图片
+
 ###1.3.0
 >* 增加disableViewPager参数
 

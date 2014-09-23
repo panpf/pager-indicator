@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package me.xiaopan.android.pagerslidingtabstrip;
+package me.xiaopan.android.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -23,7 +23,6 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
@@ -32,6 +31,8 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import me.xiaopan.android.pagerslidingtabstrip.sample.R;
 
 /**
  * 专为ViewPager定制的滑动选项卡 HOME URL：http://github.com/xiaopansky/Android-PagerSlidingTabStrip
@@ -239,6 +240,19 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
     }
 
     /**
+     * 获取Tab
+     * @param position 位置
+     * @return Tab的View
+     */
+    public View getTab(int position){
+        if(tabsLayout != null && tabsLayout.getChildCount() > position){
+            return tabsLayout.getChildAt(position);
+        }else{
+            return null;
+        }
+    }
+
+    /**
      * 滚动到指定的位置
      */
     private void scrollToChild(int position, int offset) {
@@ -432,6 +446,15 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
     public void setSlidingBlockDrawable(Drawable slidingBlockDrawable) {
         this.slidingBlockDrawable = slidingBlockDrawable;
         requestLayout();
+    }
+
+    /**
+     * 设置是否禁止拉伸滑块图片
+     * @param disableTensileSlidingBlock 是否禁止拉伸滑块图片
+     */
+    public void setDisableTensileSlidingBlock(boolean disableTensileSlidingBlock) {
+        this.disableTensileSlidingBlock = disableTensileSlidingBlock;
+        invalidate();
     }
 
     /**
