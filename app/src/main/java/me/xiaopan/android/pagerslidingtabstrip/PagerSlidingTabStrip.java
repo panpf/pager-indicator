@@ -23,6 +23,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
@@ -236,9 +237,9 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
             View view = tabsLayout.getChildAt(position);
             if(view != null){
                 //计算新的X坐标
-                int newScrollX = view.getLeft() + offset;
+                int newScrollX = view.getLeft() + offset - getLeftMargin(view);
                 if (position > 0 || offset > 0) {
-                    newScrollX -= 240 - getOffset(view.getWidth())/2;
+                    newScrollX -= getWidth()/2 - getOffset(view.getWidth())/2;
                 }
 
                 //如果同上次X坐标不一样就执行滚动
@@ -248,6 +249,24 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
                 }
             }
         }
+    }
+
+    private int getLeftMargin(View view){
+        ViewGroup.LayoutParams params = view.getLayoutParams();
+        if(params instanceof MarginLayoutParams){
+            ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) params;
+            return marginParams.leftMargin;
+        }
+        return 0;
+    }
+
+    private int getRightMargin(View view){
+        ViewGroup.LayoutParams params = view.getLayoutParams();
+        if(params instanceof MarginLayoutParams){
+            ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) params;
+            return marginParams.rightMargin;
+        }
+        return 0;
     }
 
     /**
@@ -355,13 +374,14 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
 
             @Override
             public void onPageScrolled(int nextPagePosition, float positionOffset, int positionOffsetPixels) {
+                Log.d("PagerSlidingTabStrip", "nextPagePosition="+nextPagePosition+"; positionOffset="+positionOffset+"; positionOffsetPixels="+positionOffsetPixels);
                 ViewGroup tabsLayout = getTabsLayout();
                 if(nextPagePosition < tabsLayout.getChildCount()){
                     View view = tabsLayout.getChildAt(nextPagePosition);
                     if(view != null){
                         currentPosition = nextPagePosition;
                         currentPositionOffset = positionOffset;
-                        scrollToChild(nextPagePosition, (int) (positionOffset * view.getWidth()));
+                        scrollToChild(nextPagePosition, (int) (positionOffset * (view.getWidth() + getLeftMargin(view) + getRightMargin(view))));
                         invalidate();
                     }
                 }
@@ -372,6 +392,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
 
             @Override
             public void onPageScrollStateChanged(int arg0) {
+                Log.d("PagerSlidingTabStrip", "PageScrollStateChanged="+arg0);
                 if(onPageChangeListener != null){
                     onPageChangeListener.onPageScrollStateChanged(arg0);
                 }
@@ -436,8 +457,6 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
 
     /**
      * Tab点击监听器
-     * @author xiaopan
-     *
      */
     public interface OnClickTabListener {
         public void onClickTab(View tab, int index);
