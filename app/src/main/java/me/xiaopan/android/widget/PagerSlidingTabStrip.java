@@ -16,15 +16,20 @@
 
 package me.xiaopan.android.widget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
@@ -55,6 +60,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
     private OnClickTabListener onClickTabListener;
     private List<View> tabViews;
     private boolean disableTensileSlidingBlock; // 禁止拉伸滑块图片
+    private TabViewFactory tabViewFactory;
 
     public PagerSlidingTabStrip(Context context) {
         this(context, null);
@@ -63,7 +69,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
     public PagerSlidingTabStrip(Context context, AttributeSet attrs) {
         super(context, attrs);
         setHorizontalScrollBarEnabled(false);	//隐藏横向滑动提示条
-
+        removeAllViews();
         if(attrs != null){
             TypedArray attrsTypedArray = context.obtainStyledAttributes(attrs, R.styleable.PagerSlidingTabStrip);
             if(attrsTypedArray != null){
@@ -80,10 +86,16 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        if(!allowWidthFull) return;
+        if(!allowWidthFull){
+            return;
+        }
         ViewGroup tabsLayout = getTabsLayout();
-        if(tabsLayout == null || tabsLayout.getMeasuredWidth() >= getMeasuredWidth()) return;
-        if(tabsLayout.getChildCount() <= 0) return;
+        if(tabsLayout == null){
+            return;
+        }
+        if(tabsLayout.getChildCount() <= 0){
+            return;
+        }
 
         if(tabViews == null){
             tabViews = new ArrayList<View>();
@@ -127,6 +139,9 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
                     bigTabCount--;
                     iterator.remove();
                 }
+            }
+            if(bigTabCount <= 0){
+                break;
             }
             averageWidth = parentViewWidth /bigTabCount;
             boolean end = true;
@@ -232,11 +247,22 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
                 tabsLayout = (ViewGroup) getChildAt(0);
             }else{
                 removeAllViews();
-                tabsLayout = new LinearLayout(getContext());
-                addView(tabsLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                LinearLayout tabsLayout = new LinearLayout(getContext());
+                tabsLayout.setGravity(Gravity.CENTER_VERTICAL);
+                this.tabsLayout = tabsLayout;
+                addView(tabsLayout, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
             }
         }
         return tabsLayout;
+    }
+
+    /**
+     * 重置，清除所有tab
+     */
+    public void reset(){
+        if(tabViewFactory != null){
+            tabViewFactory.addTabs(getTabsLayout(), viewPager != null?viewPager.getCurrentItem():0);
+        }
     }
 
     /**
@@ -335,48 +361,6 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
             if(currentSelectedTabView != null){
                 currentSelectedTabView.setSelected(true);
             }
-        }
-    }
-
-    /**
-     * 添加Tab
-     */
-    public void addTab(View tabView, int index){
-        if(tabView != null){
-            getTabsLayout().addView(tabView, index);
-            requestLayout();
-        }
-    }
-
-    /**
-     * 添加Tab
-     */
-    public void addTab(View tabView){
-        addTab(tabView, -1);
-    }
-
-    /**
-     * 添加Tab
-     * @param tabViews 可以一次添加多个Tab
-     */
-    public void addTab(View... tabViews) {
-        if(tabViews != null){
-            for(View view : tabViews){
-                getTabsLayout().addView(view);
-            }
-            requestLayout();
-        }
-    }
-
-    /**
-     * 添加Tab
-     */
-    public void addTab(List<View> tabViews) {
-        if(tabViews != null){
-            for(View view : tabViews){
-                getTabsLayout().addView(view);
-            }
-            requestLayout();
         }
     }
 
@@ -487,9 +471,39 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
     }
 
     /**
+     * 设置TabView生成器
+     * @param tabViewFactory
+     */
+    public void setTabViewFactory(TabViewFactory tabViewFactory) {
+        this.tabViewFactory = tabViewFactory;
+        tabViewFactory.addTabs(getTabsLayout(), viewPager!=null?viewPager.getCurrentItem():0);
+    }
+
+    /**
      * Tab点击监听器
      */
     public interface OnClickTabListener {
         public void onClickTab(View tab, int index);
+    }
+
+    @Override
+    @TargetApi(Build.VERSION_CODES.FROYO)
+    protected void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(tabViewFactory != null){
+            tabViewFactory.addTabs(getTabsLayout(), viewPager != null?viewPager.getCurrentItem():0);
+        }
+    }
+
+    /**
+     * TabView生成器
+     */
+    public interface TabViewFactory{
+        /**
+         * 添加tab
+         * @param parent
+         * @param defaultPosition
+         */
+        public void addTabs(ViewGroup parent, int defaultPosition);
     }
 }

@@ -56,7 +56,7 @@
 
 ![smaple](https://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/docs/sample2.png)
 
-你还可以在代码中通过PagerSlidingTabStrip.addTab()方法添加Tab
+你还可以在代码中通过PagerSlidingTabStrip.setTabViewFactory()方法添加Tab
 
 ####4.设置ViewPager
 ```java
@@ -274,6 +274,9 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
 更详尽的代码请下载源码请使用Android Studio导入查看
 
 ##Change Log
+###1.5.0
+>* 改进在代码中添加Tab的方式，之前是通过addTabView()方法，现在时通过setTabViewFactory()方法
+
 ###1.4.0
 >* 支持Tab View设置外边距
 >* 支持禁止拉伸滑块图片
