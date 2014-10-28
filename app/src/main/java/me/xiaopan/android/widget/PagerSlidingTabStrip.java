@@ -16,13 +16,10 @@
 
 package me.xiaopan.android.widget;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
@@ -40,8 +37,8 @@ import java.util.List;
 import me.xiaopan.android.pagerslidingtabstrip.sample.R;
 
 /**
- * 专为ViewPager定制的滑动选项卡 HOME URL：http://github.com/xiaopansky/Android-PagerSlidingTabStrip
- * @version 1.3.0
+ * 专为ViewPager定制的滑动选项卡 HOME URL：http://github.com/xiaopansky/PagerSlidingTabStrip
+ * @version 1.5.1
  * @author Peng fei Pan
  */
 public class PagerSlidingTabStrip extends HorizontalScrollView implements View.OnClickListener {
@@ -84,8 +81,16 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if(tabsLayout != null){
+            View childView;
+            for(int w = 0, size = tabsLayout.getChildCount(); w < size; w++){
+                childView = tabsLayout.getChildAt(w);
+                ViewGroup.LayoutParams params = childView.getLayoutParams();
+                params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+                childView.setLayoutParams(params);
+            }
+        }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
         if(!allowWidthFull){
             return;
         }
@@ -484,15 +489,6 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
      */
     public interface OnClickTabListener {
         public void onClickTab(View tab, int index);
-    }
-
-    @Override
-    @TargetApi(Build.VERSION_CODES.FROYO)
-    protected void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if(tabViewFactory != null){
-            tabViewFactory.addTabs(getTabsLayout(), viewPager != null?viewPager.getCurrentItem():0);
-        }
     }
 
     /**

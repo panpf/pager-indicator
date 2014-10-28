@@ -274,6 +274,9 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
 更详尽的代码请下载源码请使用Android Studio导入查看
 
 ##Change Log
+###1.5.1
+>* 解决在L上Activity加了android:configChanges="orientation|keyboardHidden|screenSize"属性后横竖屏转换时间距变大的BUG
+
 ###1.5.0
 >* 改进在代码中添加Tab的方式，之前是通过addTabView()方法，现在时通过setTabViewFactory()方法
 
