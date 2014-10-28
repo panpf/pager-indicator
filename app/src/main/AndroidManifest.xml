@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".SlidingTabStripActivity"
+            android:name="me.xiaopan.android.pagerslidingtabstrip.sample.SlidingTabStripActivity"
             android:label="@string/app_name"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>

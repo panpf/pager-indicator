@@ -83,7 +83,7 @@ public class SlidingTabStripActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("http://github.com/xiaopansky/Android-PagerSlidingTabStrip"));
+        intent.setData(Uri.parse("http://github.com/xiaopansky/PagerSlidingTabStrip"));
         startActivity(intent);
         return super.onOptionsItemSelected(item);
     }

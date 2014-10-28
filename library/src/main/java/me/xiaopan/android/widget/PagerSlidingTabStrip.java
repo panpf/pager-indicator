@@ -26,7 +26,6 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
@@ -34,7 +33,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import me.xiaopan.android.pagerslidingtabstrip.sample.R;
+import me.xiaopan.android.pagerslidingtabstrip.R;
 
 /**
  * 专为ViewPager定制的滑动选项卡 HOME URL：http://github.com/xiaopansky/PagerSlidingTabStrip
@@ -81,7 +80,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if(tabsLayout != null){
+        if(allowWidthFull && tabsLayout != null){
             View childView;
             for(int w = 0, size = tabsLayout.getChildCount(); w < size; w++){
                 childView = tabsLayout.getChildAt(w);
@@ -255,7 +254,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
                 LinearLayout tabsLayout = new LinearLayout(getContext());
                 tabsLayout.setGravity(Gravity.CENTER_VERTICAL);
                 this.tabsLayout = tabsLayout;
-                addView(tabsLayout, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
+                addView(tabsLayout, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
             }
         }
         return tabsLayout;
@@ -309,7 +308,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
     private int getLeftMargin(View view){
         ViewGroup.LayoutParams params = view.getLayoutParams();
         if(params instanceof MarginLayoutParams){
-            ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) params;
+            MarginLayoutParams marginParams = (MarginLayoutParams) params;
             return marginParams.leftMargin;
         }
         return 0;
@@ -318,7 +317,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
     private int getRightMargin(View view){
         ViewGroup.LayoutParams params = view.getLayoutParams();
         if(params instanceof MarginLayoutParams){
-            ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) params;
+            MarginLayoutParams marginParams = (MarginLayoutParams) params;
             return marginParams.rightMargin;
         }
         return 0;
