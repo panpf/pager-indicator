@@ -16,9 +16,9 @@
 >* [Download it on Github](http://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/releases/PagerSlidingTabStrip-1.1.0.apk)
 
 ##Usage Guide
-####1.添加[PagerSlidingTabStrip.java](http://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/app/src/main/java/me/xiaopan/android/widget/PagerSlidingTabStrip.java)到你的项目中
+####1.添加[PagerSlidingTabStrip.java](http://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/library/src/main/java/me/xiaopan/android/widget/PagerSlidingTabStrip.java)到你的项目中
 
-####2.添加[attrs.xml](http://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/app/src/main/res/values/attrs.xml)到你的项目的res/values目录下
+####2.添加[attrs.xml](http://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/app/library/src/main/res/values/attrs.xml)到你的项目的res/values目录下
 如果你的项目中已经存在attrs.xml文件，那么你可以拷贝属性定义部分代码到你的attrs.xml文件中，代码如下：
 ```xml
 <declare-styleable name="PagerSlidingTabStrip">
