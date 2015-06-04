@@ -48,7 +48,6 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
     private boolean start;
     private boolean allowWidthFull;    // 内容宽度无法充满时，允许自动调整Item的宽度以充满
     private boolean disableViewPager;   // 禁用ViewPager
-    private View currentSelectedTabView;	//当前标题项
     private Drawable slidingBlockDrawable;	//滑块
     private ViewPager viewPager;	//ViewPager
     private ViewGroup tabsLayout;	//标题项布局
@@ -355,15 +354,12 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements View.O
     /**
      * 选中指定位置的TAB
      */
-    private void selectedTab(int currentSelectedTabPosition){
+    private void selectedTab(int newSelectedTabPosition){
         ViewGroup tabsLayout = getTabsLayout();
-        if(currentSelectedTabPosition > -1 && tabsLayout != null && currentSelectedTabPosition < tabsLayout.getChildCount()){
-            if(currentSelectedTabView != null){
-                currentSelectedTabView.setSelected(false);
-            }
-            currentSelectedTabView = tabsLayout.getChildAt(currentSelectedTabPosition);
-            if(currentSelectedTabView != null){
-                currentSelectedTabView.setSelected(true);
+        if(newSelectedTabPosition > -1 && tabsLayout != null && newSelectedTabPosition < tabsLayout.getChildCount()){
+            for(int w = 0, size = tabsLayout.getChildCount(); w < size; w++){
+                View tabView = tabsLayout.getChildAt(w);
+                tabView.setSelected(w==newSelectedTabPosition);
             }
         }
     }

@@ -1,24 +1,23 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.0.2"
+    compileSdkVersion 22
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "me.xiaopan.android.pagerslidingtabstrip"
-        minSdkVersion 8
-        targetSdkVersion 20
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion 7
+        targetSdkVersion 22
+        versionCode 151
+        versionName "1.5.1"
     }
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:20.0.0'
+    compile 'com.android.support:support-v4:22.0.0'
 }

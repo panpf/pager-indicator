@@ -1,9 +1,5 @@
 package me.xiaopan.android.pagerslidingtabstrip.sample;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -15,6 +11,10 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import me.xiaopan.android.widget.PagerSlidingTabStrip;
 
@@ -59,7 +59,7 @@ public class SlidingTabStripActivity extends Activity {
             views.add(getContentView(colors[Math.abs(random.nextInt())%colors.length]));
         }
         viewPager.setAdapter(new ViewPagerAdapter(views));
-        viewPager.setCurrentItem(index<length?index:length);
+        viewPager.setCurrentItem(index < length ? index : length);
         pagerSlidingTabStrip.setViewPager(viewPager);
     }
 

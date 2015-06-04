@@ -1,18 +1,18 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.0.2"
+    compileSdkVersion 22
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
         applicationId "me.xiaopan.android.pagerslidingtabstrip.sample"
-        minSdkVersion 8
-        targetSdkVersion 20
+        minSdkVersion 7
+        targetSdkVersion 22
     }
 
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
