@@ -12,7 +12,7 @@
 >* 支持通过disableTensileSlidingBlock属性设置是否拉伸滑块图片
 
 ## Sample App
-[Download it on Github](http://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/releases/sample.apk)
+[Download it on Github](http://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/docs/sample.apk)
 
 ![download](/docs/qr_download.png)
 
