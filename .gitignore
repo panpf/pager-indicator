@@ -29,3 +29,6 @@ build/
 
 # Mac files
 .DS_Store
+
+# Signature files
+*.jks

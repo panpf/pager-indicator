@@ -1,5 +1,15 @@
 apply plugin: 'com.android.application'
 
+Properties properties = new Properties()
+File localPropertiesFile = project.file("local.properties")
+if(localPropertiesFile.exists()){
+    properties.load(localPropertiesFile.newDataInputStream())
+}
+def signatureStoreFile = properties.getProperty("signature.storeFile");
+def signatureStorePassword = properties.getProperty("signature.storePassword");
+def signatureKeyAlias = properties.getProperty("signature.keyAlias");
+def signatureKeyPassword = properties.getProperty("signature.keyPassword");
+
 android {
     compileSdkVersion 22
     buildToolsVersion "21.1.2"
@@ -12,10 +22,20 @@ android {
         versionName "1.6.0"
     }
 
+    signingConfigs{
+        release{
+            storeFile file(signatureStoreFile)
+            storePassword signatureStorePassword
+            keyAlias signatureKeyAlias
+            keyPassword signatureKeyPassword
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.release
         }
     }
 
