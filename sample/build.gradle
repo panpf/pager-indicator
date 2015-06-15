@@ -5,9 +5,11 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "me.xiaopan.android.pagerslidingtabstrip.sample"
+        applicationId "me.xiaopan.pstssample"
         minSdkVersion 7
         targetSdkVersion 22
+        versionCode 160
+        versionName "1.6.0"
     }
 
     buildTypes {
@@ -18,12 +20,6 @@ android {
     }
 }
 
-repositories {
-    flatDir {
-        dirs'libs'
-    }
-}
-
 dependencies {
-    compile project(':library')
+    compile project(':pager-sliding-tag-strip')
 }

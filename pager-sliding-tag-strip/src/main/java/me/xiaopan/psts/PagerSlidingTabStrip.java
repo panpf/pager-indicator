@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package me.xiaopan.android.widget;
+package me.xiaopan.psts;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -33,11 +33,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import me.xiaopan.android.pagerslidingtabstrip.R;
-
 /**
  * 专为ViewPager定制的滑动选项卡 HOME URL：http://github.com/xiaopansky/PagerSlidingTabStrip
- * @version 1.5.1
+ * @version 1.6.0
  * @author Peng fei Pan
  */
 public class PagerSlidingTabStrip extends HorizontalScrollView implements View.OnClickListener {

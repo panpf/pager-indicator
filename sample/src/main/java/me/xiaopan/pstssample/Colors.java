@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package me.xiaopan.android.pagerslidingtabstrip.sample;
+package me.xiaopan.pstssample;
 
 /**
  * 提供一些常用的颜色

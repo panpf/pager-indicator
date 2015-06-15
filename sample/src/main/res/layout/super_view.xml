@@ -10,7 +10,7 @@
 	    android:layout_height="0dp"
 	    android:layout_weight="1"
 	    android:orientation="vertical">
-        <me.xiaopan.android.widget.PagerSlidingTabStrip
+        <me.xiaopan.psts.PagerSlidingTabStrip
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/slidingTabStrip_super"
@@ -33,7 +33,7 @@
 	                style="@style/text_slidingTabTitle"
 	                android:text="管理"/>
             </LinearLayout>
-        </me.xiaopan.android.widget.PagerSlidingTabStrip>
+        </me.xiaopan.psts.PagerSlidingTabStrip>
 
         <FrameLayout
 	        android:layout_width="match_parent"

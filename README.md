@@ -36,7 +36,7 @@
 
 ####3.在布局中引用PagerSlidingTabStrip
 ```xml
-<me.xiaopan.android.widget.PagerSlidingTabStrip
+<me.xiaopan.psts.PagerSlidingTabStrip
     xmlns:app="http://schemas.android.com/apk/res/你的包名"
     android:id="@+id/slidingTabStrip_2"
     android:layout_width="match_parent"
@@ -50,7 +50,7 @@
         <TextView style="@style/text_slidingTabTitle" android:text="分类"/>
         <TextView style="@style/text_slidingTabTitle" android:text="管理"/>
     </LinearLayout>
-</me.xiaopan.android.widget.PagerSlidingTabStrip>
+</me.xiaopan.psts.PagerSlidingTabStrip>
 ```
 效果图如下：
 
@@ -83,7 +83,7 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
         android:layout_height="0dp" 
         android:layout_weight="1" 
         android:orientation="vertical">
-        <me.xiaopan.android.widget.PagerSlidingTabStrip
+        <me.xiaopan.psts.PagerSlidingTabStrip
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/slidingTabStrip_1"
@@ -138,7 +138,7 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
                     style="@style/text_slidingTabTitle" 
                     android:text="使命召唤"/>
             </LinearLayout>
-        </me.xiaopan.android.widget.PagerSlidingTabStrip>
+        </me.xiaopan.psts.PagerSlidingTabStrip>
 
         <FrameLayout 
             android:layout_width="match_parent" 
@@ -157,7 +157,7 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
         android:layout_height="0dp" 
         android:layout_weight="1" 
         android:orientation="vertical">
-        <me.xiaopan.android.widget.PagerSlidingTabStrip
+        <me.xiaopan.psts.PagerSlidingTabStrip
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/slidingTabStrip_2"
@@ -180,7 +180,7 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
                     style="@style/text_slidingTabTitle" 
                     android:text="管理"/>
             </LinearLayout>
-        </me.xiaopan.android.widget.PagerSlidingTabStrip>
+        </me.xiaopan.psts.PagerSlidingTabStrip>
 
         <FrameLayout 
             android:layout_width="match_parent" 
@@ -200,7 +200,7 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
         android:layout_height="0dp" 
         android:layout_weight="1" 
         android:orientation="vertical">
-        <me.xiaopan.android.widget.PagerSlidingTabStrip
+        <me.xiaopan.psts.PagerSlidingTabStrip
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/slidingTabStrip_3"
@@ -218,7 +218,7 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
                     style="@style/text_slidingTabTitle" 
                     android:text="攻略"/>
             </LinearLayout>
-        </me.xiaopan.android.widget.PagerSlidingTabStrip>
+        </me.xiaopan.psts.PagerSlidingTabStrip>
 
         <FrameLayout 
             android:layout_width="match_parent" 
@@ -238,7 +238,7 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
         android:layout_height="0dp" 
         android:layout_weight="1" 
         android:orientation="vertical">
-        <me.xiaopan.android.widget.PagerSlidingTabStrip
+        <me.xiaopan.psts.PagerSlidingTabStrip
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/slidingTabStrip_4"
@@ -254,7 +254,7 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
                     style="@style/text_slidingTabTitle" 
                     android:text="发现"/>
             </LinearLayout>
-        </me.xiaopan.android.widget.PagerSlidingTabStrip>
+        </me.xiaopan.psts.PagerSlidingTabStrip>
 
         <FrameLayout 
             android:layout_width="match_parent" 

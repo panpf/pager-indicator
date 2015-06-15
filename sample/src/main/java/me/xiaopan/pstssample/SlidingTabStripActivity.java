@@ -1,4 +1,4 @@
-package me.xiaopan.android.pagerslidingtabstrip.sample;
+package me.xiaopan.pstssample;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -16,34 +16,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import me.xiaopan.android.widget.PagerSlidingTabStrip;
+import me.xiaopan.psts.PagerSlidingTabStrip;
 
 /**
  * 带滑动标题的ViewPager
  */
 public class SlidingTabStripActivity extends Activity {
     private static final int[] colors = new int[]{Colors.SKYBLUE, Colors.CHOCOLATE, Colors.CYAN, Colors.FUCHSIA, Colors.GOLD, Colors.BLUE, Colors.GREEN, Colors.RED, Colors.YELLOW, Colors.GRAY};
-	private PagerSlidingTabStrip pagerSlidingTabStrip1;
-	private PagerSlidingTabStrip pagerSlidingTabStrip2;
-	private PagerSlidingTabStrip pagerSlidingTabStrip3;
-	private PagerSlidingTabStrip pagerSlidingTabStrip4;
-	private ViewPager viewPager1;
-	private ViewPager viewPager2;
-	private ViewPager viewPager3;
-	private ViewPager viewPager4;
 
-	@Override
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sliding_tab_strip);
-        pagerSlidingTabStrip1 = (PagerSlidingTabStrip) findViewById(R.id.slidingTabStrip_1);
-        pagerSlidingTabStrip2 = (PagerSlidingTabStrip) findViewById(R.id.slidingTabStrip_2);
-        pagerSlidingTabStrip3 = (PagerSlidingTabStrip) findViewById(R.id.slidingTabStrip_3);
-        pagerSlidingTabStrip4 = (PagerSlidingTabStrip) findViewById(R.id.slidingTabStrip_4);
-        viewPager1 = (ViewPager) findViewById(R.id.viewPager_1);
-        viewPager2 = (ViewPager) findViewById(R.id.viewPager_2);
-        viewPager3 = (ViewPager) findViewById(R.id.viewPager_3);
-        viewPager4 = (ViewPager) findViewById(R.id.viewPager_4);
+        PagerSlidingTabStrip pagerSlidingTabStrip1 = (PagerSlidingTabStrip) findViewById(R.id.slidingTabStrip_1);
+        PagerSlidingTabStrip pagerSlidingTabStrip2 = (PagerSlidingTabStrip) findViewById(R.id.slidingTabStrip_2);
+        PagerSlidingTabStrip pagerSlidingTabStrip3 = (PagerSlidingTabStrip) findViewById(R.id.slidingTabStrip_3);
+        PagerSlidingTabStrip pagerSlidingTabStrip4 = (PagerSlidingTabStrip) findViewById(R.id.slidingTabStrip_4);
+        ViewPager viewPager1 = (ViewPager) findViewById(R.id.viewPager_1);
+        ViewPager viewPager2 = (ViewPager) findViewById(R.id.viewPager_2);
+        ViewPager viewPager3 = (ViewPager) findViewById(R.id.viewPager_3);
+        ViewPager viewPager4 = (ViewPager) findViewById(R.id.viewPager_4);
 
         init(0, pagerSlidingTabStrip1, viewPager1);
         init(1, pagerSlidingTabStrip2, viewPager2);
