@@ -1,8 +1,8 @@
-#![Logo](https://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/app/src/main/res/drawable-mdpi/ic_launcher.png) PagerSlidingTabStrip
+#![Logo](docs/logo.png) PagerSlidingTabStrip
 
 这是Android上的一个ViewPager滑动导航条组件，主要就是用于配合ViewPager实现滑动的导航条，以容纳无限多的Tab
 
-![smaple](https://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/docs/sample_nexus.png)
+![smaple](docs/sample.gif)
 
 ##Features
 >* 当所有的Tab在横向上无法充满整个屏幕的时候，将会根据allowWidthFull参数决定是否调整所有的Item来充满。调整的规则是平均分配每个Tab的宽度，如果某个Tab的最小宽度大于平均宽度，那么其宽度保持不变
@@ -12,27 +12,71 @@
 >* 支持通过disableTensileSlidingBlock属性设置是否拉伸滑块图片
 
 ## Sample App
->* [Get it on Google Play](http://play.google.com/store/apps/details?id=me.xiaopan.android.pagerslidingtabstrip)
->* [Download it on Github](http://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/releases/PagerSlidingTabStrip-1.1.0.apk)
+[Download it on Github](http://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/releases/sample.apk)
+
+![download](/docs/qr_download.png)
 
 ##Usage Guide
-####1.添加[PagerSlidingTabStrip.java](http://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/library/src/main/java/me/xiaopan/android/widget/PagerSlidingTabStrip.java)到你的项目中
+####1. 导入PagerSlidingTabStrip（Import PagerSlidingTabStrip to your project）
 
-####2.添加[attrs.xml](http://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/library/src/main/res/values/attrs.xml)到你的项目的res/values目录下
-如果你的项目中已经存在attrs.xml文件，那么你可以拷贝属性定义部分代码到你的attrs.xml文件中，代码如下：
-```xml
-<declare-styleable name="PagerSlidingTabStrip">
-    <attr name="slidingBlock" format="reference|color"/>
-    <attr name="allowWidthFull" format="boolean"/>
-    <attr name="disableViewPager" format="boolean"/>
-    <attr name="disableTensileSlidingBlock" format="boolean"/>
-</declare-styleable>
+#####使用Gradle（Use Gradle）
+``从JCenter仓库导入（Import from jcenter）``
+
+```groovy
+dependencies{
+	compile 'me.xiaopan:pager-sliding-tag-strip:1.6.0'
+}
 ```
-属性释义：
->* ``slidingBlock``：指定滑块图片，对应的方法是PagerSlidingTabStrip.setSlidingBlockDrawable(Drawable)
->* ``allowWidthFull``：当所有Tab无法充满PagerSlidingTabStrip时是否自动调整所有Tab的宽度来达到充满的目的，对应的方式是PagerSlidingTabStrip.setAllowWidthFull(boolean)
->* ``disableViewPager``：禁用ViewPager，禁用后不会有初始选中状态效果，也不会绘制滑块，你调用setViewPager()方法也不会起作用
->* ``disableTensileSlidingBlock``：禁止拉伸滑块图片
+
+``离线模式（Offline work）``
+
+点击下载[pager-sliding-tag-strip-1.6.0.aar](https://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/releases/pager-sliding-tag-strip-1.6.0.aar)并放到你module的libs目录下
+
+然后在你module的build.gradle文件中添加以下代码：
+```groovy
+repositories{
+    flatDir(){
+        dirs 'libs'
+    }
+}
+
+dependencies{
+    compile(name:'pager-sliding-tag-strip-1.6.0', ext:'aar')
+}
+```
+最后同步一下Gradle即可
+
+#####使用Eclipse（Use Eclipse）
+请自行下载源码集成
+
+####2. 配置最低版本（Configure min sdk version）
+PagerSlidingTabStrip最低兼容API v7
+
+#####使用Gradle（Use Gradle）
+在app/build.gradle文件文件中配置最低版本为7
+```groovy
+android {
+	...
+
+    defaultConfig {
+        minSdkVersion 7
+        ...
+    }
+}
+```
+
+#####使用Eclipse（Use Eclipse）
+在AndroidManifest.xml文件中配置最低版本为7
+```xml
+<manifest
+	...
+	>
+    <uses-sdk android:minSdkVersion="7"/>
+    <application>
+    ...
+    </application>
+</manifest>
+```
 
 ####3.在布局中引用PagerSlidingTabStrip
 ```xml
@@ -58,6 +102,12 @@
 
 你还可以在代码中通过PagerSlidingTabStrip.setTabViewFactory()方法添加Tab
 
+自定义属性释义：
+>* ``slidingBlock``：指定滑块图片，对应的方法是PagerSlidingTabStrip.setSlidingBlockDrawable(Drawable)
+>* ``allowWidthFull``：当所有Tab无法充满PagerSlidingTabStrip时是否自动调整所有Tab的宽度来达到充满的目的，对应的方式是PagerSlidingTabStrip.setAllowWidthFull(boolean)
+>* ``disableViewPager``：禁用ViewPager，禁用后不会有初始选中状态效果，也不会绘制滑块，你调用setViewPager()方法也不会起作用
+>* ``disableTensileSlidingBlock``：禁止拉伸滑块图片
+
 ####4.设置ViewPager
 ```java
 ViewPager moreViewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -69,237 +119,7 @@ pagerSlidingTabStrip.setViewPager(moreViewPager);
 
 你还可以直接调用ViewPager.setCurrentItem(int)方法来改变默认Tab（无论是在调用setViewPager(ViewPager)方法之前还是之后都可以）
 
-####5.示例图源码：
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/me.xiaopan.android.pagerslidingtabstrip"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-    <LinearLayout 
-        android:layout_width="match_parent" 
-        android:layout_height="0dp" 
-        android:layout_weight="1" 
-        android:orientation="vertical">
-        <me.xiaopan.psts.PagerSlidingTabStrip
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/slidingTabStrip_1"
-            app:slidingBlock="@drawable/image_sliding_block"
-            android:background="@drawable/sliding_tab_strip_background">
-            <LinearLayout 
-                android:layout_width="wrap_content" 
-                android:layout_height="wrap_content">
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="穿越火线"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="剑灵"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="跑跑卡丁车"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="劲舞团"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="梦幻西游"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="诛仙"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="剑侠情缘"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="征途"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="植物大战僵尸"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="英雄联盟"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="传奇"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="魔兽世界"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="地下城与勇士"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="我叫MT"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="使命召唤"/>
-            </LinearLayout>
-        </me.xiaopan.psts.PagerSlidingTabStrip>
-
-        <FrameLayout 
-            android:layout_width="match_parent" 
-            android:layout_height="0dp" android:layout_weight="1">
-            <android.support.v4.view.ViewPager 
-                android:id="@+id/viewPager_1" 
-                android:layout_width="match_parent" 
-                android:layout_height="match_parent"/>
-            <include layout="@layout/include_shadow_down"/>
-            <include layout="@layout/include_shadow_up"/>
-        </FrameLayout>
-    </LinearLayout>
-
-    <LinearLayout 
-        android:layout_width="match_parent" 
-        android:layout_height="0dp" 
-        android:layout_weight="1" 
-        android:orientation="vertical">
-        <me.xiaopan.psts.PagerSlidingTabStrip
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/slidingTabStrip_2"
-            app:allowWidthFull="true"
-            app:slidingBlock="@drawable/image_sliding_block"
-            android:background="@drawable/sliding_tab_strip_background">
-            <LinearLayout 
-                android:layout_width="wrap_content" 
-                android:layout_height="wrap_content">
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="精品"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="排行"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="分类"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="管理"/>
-            </LinearLayout>
-        </me.xiaopan.psts.PagerSlidingTabStrip>
-
-        <FrameLayout 
-            android:layout_width="match_parent" 
-            android:layout_height="0dp" 
-            android:layout_weight="1">
-            <android.support.v4.view.ViewPager 
-                android:id="@+id/viewPager_2" 
-                android:layout_width="match_parent" 
-                android:layout_height="match_parent"/>
-            <include layout="@layout/include_shadow_down"/>
-            <include layout="@layout/include_shadow_up"/>
-        </FrameLayout>
-    </LinearLayout>
-
-    <LinearLayout 
-        android:layout_width="match_parent" 
-        android:layout_height="0dp" 
-        android:layout_weight="1" 
-        android:orientation="vertical">
-        <me.xiaopan.psts.PagerSlidingTabStrip
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/slidingTabStrip_3"
-            app:slidingBlock="@drawable/image_sliding_block">
-            <LinearLayout 
-                android:layout_width="wrap_content" 
-                android:layout_height="wrap_content">
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="详情"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="评论"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="攻略"/>
-            </LinearLayout>
-        </me.xiaopan.psts.PagerSlidingTabStrip>
-
-        <FrameLayout 
-            android:layout_width="match_parent" 
-            android:layout_height="0dp" 
-            android:layout_weight="1">
-            <android.support.v4.view.ViewPager 
-                android:id="@+id/viewPager_3" 
-                android:layout_width="match_parent" 
-                android:layout_height="match_parent"/>
-            <include layout="@layout/include_shadow_down"/>
-            <include layout="@layout/include_shadow_up"/>
-        </FrameLayout>
-    </LinearLayout>
-
-    <LinearLayout 
-        android:layout_width="match_parent" 
-        android:layout_height="0dp" 
-        android:layout_weight="1" 
-        android:orientation="vertical">
-        <me.xiaopan.psts.PagerSlidingTabStrip
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/slidingTabStrip_4"
-            android:layout_gravity="center_horizontal"
-            app:slidingBlock="@drawable/image_sliding_block">
-            <LinearLayout 
-                android:layout_width="wrap_content" 
-                android:layout_height="wrap_content">
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="聊天"/>
-                <TextView 
-                    style="@style/text_slidingTabTitle" 
-                    android:text="发现"/>
-            </LinearLayout>
-        </me.xiaopan.psts.PagerSlidingTabStrip>
-
-        <FrameLayout 
-            android:layout_width="match_parent" 
-            android:layout_height="0dp" 
-            android:layout_weight="1">
-            <android.support.v4.view.ViewPager 
-                android:id="@+id/viewPager_4" 
-                android:layout_width="match_parent" 
-                android:layout_height="match_parent"/>
-            <include layout="@layout/include_shadow_down"/>
-            <include layout="@layout/include_shadow_up"/>
-        </FrameLayout>
-    </LinearLayout>
-</LinearLayout>
-```
-
 更详尽的代码请下载源码请使用Android Studio导入查看
-
-##Change Log
-###1.5.1
->* 解决在L上Activity加了android:configChanges="orientation|keyboardHidden|screenSize"属性后横竖屏转换时间距变大的BUG
-
-###1.5.0
->* 改进在代码中添加Tab的方式，之前是通过addTabView()方法，现在时通过setTabViewFactory()方法
-
-###1.4.0
->* 支持Tab View设置外边距
->* 支持禁止拉伸滑块图片
-
-###1.3.0
->* 增加disableViewPager参数
-
-###1.2.0
->* 修改调整Tab宽度的时机，以前是在onLayout()方法中，现在是在onMeasure()方法中
-
-###1.1.1
->* 增肌对Tab以及TabLayout内边距或外边距的支持
->* 增加Tab点击监听器，通过setClickTabListener()方法即可监听Tab点击
-
-###1.1.0
->* 增加slidingBlock和allowWidthFull自定义参数
->* 增加布局预览支持，如此一来之前的使用方式就作废了
-
-###1.0.5
->* 更新版权信息
 
 ##License
 ```java
