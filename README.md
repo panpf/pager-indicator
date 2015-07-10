@@ -12,7 +12,7 @@
 >* 支持通过disableTensileSlidingBlock属性设置是否拉伸滑块图片
 
 ## Sample App
-[Download it on Github](http://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/docs/sample.apk)
+[Download it on Github](https://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/docs/sample.apk)
 
 ![download](/docs/qr_download.png)
 
@@ -24,13 +24,13 @@
 
 ```groovy
 dependencies{
-	compile 'me.xiaopan:pager-sliding-tag-strip:1.6.0'
+	compile 'me.xiaopan:pagerslidingtabstrip:1.6.0'
 }
 ```
 
 ``离线模式（Offline work）``
 
-点击下载[pager-sliding-tag-strip-1.6.0.aar](https://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/releases/pager-sliding-tag-strip-1.6.0.aar)并放到你module的libs目录下
+到[releases](https://github.com/xiaopansky/PagerSlidingTabStrip/releases)页面下载最新版本的aar包（这里以pagerslidingtabstrip-1.6.0.aar为例，具体请以你下载的版本为准），并放到你module的libs目录下
 
 然后在你module的build.gradle文件中添加以下代码：
 ```groovy
@@ -41,7 +41,7 @@ repositories{
 }
 
 dependencies{
-    compile(name:'pager-sliding-tag-strip-1.6.0', ext:'aar')
+    compile(name:'pagerslidingtabstrip-1.6.0', ext:'aar')
 }
 ```
 最后同步一下Gradle即可

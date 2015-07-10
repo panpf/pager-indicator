@@ -1,1 +1,1 @@
-include ':sample', ':pager-sliding-tag-strip'
+include ':sample', ':pagerslidingtabstrip'
