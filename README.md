@@ -47,7 +47,7 @@ dependencies{
 最后同步一下Gradle即可
 
 #####使用Eclipse（Use Eclipse）
-请自行下载源码集成
+请参考文章[1分钟不用改任何代码在Eclipse中使用AAR](http://blog.csdn.net/u013308121/article/details/46717499)
 
 ####2. 配置最低版本（Configure min sdk version）
 PagerSlidingTabStrip最低兼容API v7
