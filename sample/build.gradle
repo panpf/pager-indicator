@@ -1,18 +1,8 @@
 apply plugin: 'com.android.application'
 
-Properties properties = new Properties()
-File localPropertiesFile = project.file("local.properties")
-if(localPropertiesFile.exists()){
-    properties.load(localPropertiesFile.newDataInputStream())
-}
-def signatureStoreFile = properties.getProperty("signature.storeFile");
-def signatureStorePassword = properties.getProperty("signature.storePassword");
-def signatureKeyAlias = properties.getProperty("signature.keyAlias");
-def signatureKeyPassword = properties.getProperty("signature.keyPassword");
-
 android {
     compileSdkVersion 22
-    buildToolsVersion "21.1.2"
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         applicationId "me.xiaopan.pstssample"
@@ -22,20 +12,25 @@ android {
         versionName "1.6.0"
     }
 
-    signingConfigs{
-        release{
-            storeFile file(signatureStoreFile)
-            storePassword signatureStorePassword
-            keyAlias signatureKeyAlias
-            keyPassword signatureKeyPassword
-        }
-    }
+//    signingConfigs{
+//        release{
+//            Properties properties = new Properties()
+//            File localPropertiesFile = project.file("local.properties")
+//            if(localPropertiesFile.exists()){
+//                properties.load(localPropertiesFile.newDataInputStream())
+//            }
+//            storeFile file(properties.getProperty("signature.storeFile"))
+//            storePassword properties.getProperty("signature.storePassword")
+//            keyAlias properties.getProperty("signature.keyAlias")
+//            keyPassword properties.getProperty("signature.keyPassword")
+//        }
+//    }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
         }
     }
 
