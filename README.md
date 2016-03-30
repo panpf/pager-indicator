@@ -47,7 +47,7 @@ dependencies{
 最后同步一下Gradle即可
 
 #####使用Eclipse（Use Eclipse）
-1. 首先到[JCenter](https://bintray.com/bintray/jcenter/PagerSlidingTabStrip/view)下载最新版本的aar包
+1. 首先到[JCenter](https://bintray.com/xiaopansky/maven/PagerSlidingTabStrip/view)下载最新版本的aar包
 2. 然后参考文章[1分钟不用改任何代码在Eclipse中使用AAR](http://blog.csdn.net/u013308121/article/details/46717499)集成aar
 
 ####2. 配置最低版本（Configure min sdk version）
