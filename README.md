@@ -24,13 +24,13 @@
 
 ```groovy
 dependencies{
-	compile 'me.xiaopan:pagerslidingtabstrip:1.6.0'
+	compile 'me.xiaopan:pagerslidingtabstrip:1.7.0'
 }
 ```
 
 ``离线模式（Offline work）``
 
-到[releases](https://github.com/xiaopansky/PagerSlidingTabStrip/releases)页面下载最新版本的aar包（这里以pagerslidingtabstrip-1.6.0.aar为例，具体请以你下载的版本为准），并放到你module的libs目录下
+到[releases](https://github.com/xiaopansky/PagerSlidingTabStrip/releases)页面下载最新版本的aar包（这里以pagerslidingtabstrip-1.7.0.aar为例，具体请以你下载的版本为准），并放到你module的libs目录下
 
 然后在你module的build.gradle文件中添加以下代码：
 ```groovy
@@ -41,13 +41,13 @@ repositories{
 }
 
 dependencies{
-    compile(name:'pagerslidingtabstrip-1.6.0', ext:'aar')
+    compile(name:'pagerslidingtabstrip-1.7.0', ext:'aar')
 }
 ```
 最后同步一下Gradle即可
 
 #####使用Eclipse（Use Eclipse）
-1. 首先到[releases](https://github.com/xiaopansky/PagerSlidingTabStrip/releases)页面下载最新版本的aar包
+1. 首先到[JCenter](https://bintray.com/bintray/jcenter/PagerSlidingTabStrip/view)下载最新版本的aar包
 2. 然后参考文章[1分钟不用改任何代码在Eclipse中使用AAR](http://blog.csdn.net/u013308121/article/details/46717499)集成aar
 
 ####2. 配置最低版本（Configure min sdk version）

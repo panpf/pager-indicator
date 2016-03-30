@@ -25,7 +25,9 @@ import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -56,6 +58,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
     private ViewGroup tabsLayout;    //标题项布局
     private ViewPager.OnPageChangeListener onPageChangeListener;    //页面改变监听器
     private OnClickTabListener onClickTabListener;
+    private OnDoubleClickTabListener onDoubleClickTabListener;
     private List<View> tabViews;
     private boolean disableTensileSlidingBlock; // 禁止拉伸滑块图片
     private TabViewFactory tabViewFactory;
@@ -65,6 +68,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
     private final PageChangedListener pageChangedListener = new PageChangedListener();
     private final TabViewClickListener tabViewClickListener = new TabViewClickListener();
     private final SetSelectedTabListener setSelectedTabListener = new SetSelectedTabListener();
+    private final DoubleClickGestureDetector tabViewDoubleClickGestureDetector;
 
     public PagerSlidingTabStrip(Context context) {
         this(context, null);
@@ -86,6 +90,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
                 attrsTypedArray.recycle();
             }
         }
+        tabViewDoubleClickGestureDetector = new DoubleClickGestureDetector(context);
     }
 
     @Override
@@ -254,12 +259,19 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         if (tabViewFactory != null) {
             ViewGroup tabViewGroup = getTabsLayout();
             tabViewFactory.addTabs(tabViewGroup, viewPager != null ? viewPager.getCurrentItem() : 0);
+            setTabClickEvent();
+        }
+    }
 
+    private void setTabClickEvent(){
+        ViewGroup tabViewGroup = getTabsLayout();
+        if(tabViewGroup != null && tabViewGroup.getChildCount() > 0){
             //给每一个tab设置点击事件，当点击的时候切换Pager
             for (int w = 0; w < tabViewGroup.getChildCount(); w++) {
                 View itemView = tabViewGroup.getChildAt(w);
                 itemView.setTag(w);
                 itemView.setOnClickListener(tabViewClickListener);
+                itemView.setOnTouchListener(tabViewDoubleClickGestureDetector);
             }
         }
     }
@@ -371,6 +383,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         if (disableViewPager) return;
         this.viewPager = viewPager;
         this.viewPager.setOnPageChangeListener(pageChangedListener);
+        setTabClickEvent();
         requestLayout();
     }
 
@@ -429,6 +442,15 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
     }
 
     /**
+     * 设置TAB双击监听器
+     *
+     * @param onDoubleClickTabListener TAB双击监听器
+     */
+    public void setOnDoubleClickTabListener(OnDoubleClickTabListener onDoubleClickTabListener) {
+        this.onDoubleClickTabListener = onDoubleClickTabListener;
+    }
+
+    /**
      * 设置不使用ViewPager
      *
      * @param disableViewPager 不使用ViewPager
@@ -483,6 +505,13 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
      */
     public interface OnClickTabListener {
         void onClickTab(View tab, int index);
+    }
+
+    /**
+     * Tab双击监听器
+     */
+    public interface OnDoubleClickTabListener {
+        void onDoubleClickTab(View view, int index);
     }
 
     /**
@@ -562,6 +591,32 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
                     selectedTab(currentPosition);
                 }
             }
+        }
+    }
+
+    private class DoubleClickGestureDetector extends GestureDetector.SimpleOnGestureListener implements View.OnTouchListener {
+        private GestureDetector gestureDetector;
+        private View currentView;
+
+        public DoubleClickGestureDetector(Context context) {
+            gestureDetector = new GestureDetector(context, this);
+            gestureDetector.setOnDoubleTapListener(this);
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            if (onDoubleClickTabListener != null) {
+                onDoubleClickTabListener.onDoubleClickTab(currentView, (Integer) currentView.getTag());
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            currentView = v;
+            return gestureDetector.onTouchEvent(event);
         }
     }
 }

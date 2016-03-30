@@ -8,29 +8,14 @@ android {
         applicationId "me.xiaopan.pstssample"
         minSdkVersion 7
         targetSdkVersion 22
-        versionCode 160
-        versionName "1.6.0"
+        versionCode 170
+        versionName "1.7.0"
     }
-
-//    signingConfigs{
-//        release{
-//            Properties properties = new Properties()
-//            File localPropertiesFile = project.file("local.properties")
-//            if(localPropertiesFile.exists()){
-//                properties.load(localPropertiesFile.newDataInputStream())
-//            }
-//            storeFile file(properties.getProperty("signature.storeFile"))
-//            storePassword properties.getProperty("signature.storePassword")
-//            keyAlias properties.getProperty("signature.keyAlias")
-//            keyPassword properties.getProperty("signature.keyPassword")
-//        }
-//    }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-//            signingConfig signingConfigs.release
         }
     }
 

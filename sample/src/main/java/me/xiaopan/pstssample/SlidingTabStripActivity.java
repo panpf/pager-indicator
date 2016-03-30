@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,13 @@ public class SlidingTabStripActivity extends Activity {
         init(1, pagerSlidingTabStrip2, viewPager2);
         init(2, pagerSlidingTabStrip3, viewPager3);
         init(3, pagerSlidingTabStrip4, viewPager4);
+
+        pagerSlidingTabStrip1.setOnDoubleClickTabListener(new PagerSlidingTabStrip.OnDoubleClickTabListener() {
+            @Override
+            public void onDoubleClickTab(View view, int index) {
+                Toast.makeText(getBaseContext(), ""+index, Toast.LENGTH_LONG).show();
+            }
+        });
 	}
 
     private void init(int index, PagerSlidingTabStrip pagerSlidingTabStrip, ViewPager viewPager){
