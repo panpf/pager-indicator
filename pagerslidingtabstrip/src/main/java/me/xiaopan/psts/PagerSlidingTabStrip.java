@@ -31,7 +31,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
@@ -40,10 +39,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * 专为ViewPager定制的滑动选项卡 HOME URL：https://github.com/xiaopansky/PagerSlidingTabStrip
- *
- * @author Peng fei Pan
- * @version 1.7.0
+ * 专为ViewPager定制的滑动选项卡
  */
 public class PagerSlidingTabStrip extends HorizontalScrollView {
     private int currentPosition;    //当前位置
@@ -91,6 +87,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
             }
         }
         tabViewDoubleClickGestureDetector = new DoubleClickGestureDetector(context);
+
+        getViewTreeObserver().addOnGlobalLayoutListener(setSelectedTabListener);
     }
 
     @Override
@@ -246,7 +244,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
                 LinearLayout tabsLayout = new LinearLayout(getContext());
                 tabsLayout.setGravity(Gravity.CENTER_VERTICAL);
                 this.tabsLayout = tabsLayout;
-                addView(tabsLayout, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
+                addView(tabsLayout, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
             }
         }
         return tabsLayout;
@@ -282,6 +280,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
      * @param position 位置
      * @return Tab的View
      */
+    @SuppressWarnings("unused")
     public View getTab(int position) {
         if (tabsLayout != null && tabsLayout.getChildCount() > position) {
             return tabsLayout.getChildAt(position);
@@ -316,7 +315,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
     private int getLeftMargin(View view) {
         ViewGroup.LayoutParams params = view.getLayoutParams();
         if (params instanceof MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) params;
+            MarginLayoutParams marginParams = (MarginLayoutParams) params;
             return marginParams.leftMargin;
         }
         return 0;
@@ -325,7 +324,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
     private int getRightMargin(View view) {
         ViewGroup.LayoutParams params = view.getLayoutParams();
         if (params instanceof MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) params;
+            MarginLayoutParams marginParams = (MarginLayoutParams) params;
             return marginParams.rightMargin;
         }
         return 0;
@@ -382,7 +381,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
     public void setViewPager(ViewPager viewPager) {
         if (disableViewPager) return;
         this.viewPager = viewPager;
-        this.viewPager.setOnPageChangeListener(pageChangedListener);
+        this.viewPager.addOnPageChangeListener(pageChangedListener);
         setTabClickEvent();
         requestLayout();
     }
@@ -392,6 +391,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
      *
      * @param onPageChangeListener Page切换监听器
      */
+    @SuppressWarnings("unused")
     public void setOnPageChangeListener(OnPageChangeListener onPageChangeListener) {
         this.onPageChangeListener = onPageChangeListener;
     }
@@ -409,9 +409,18 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
     /**
      * 设置滑块图片
      */
+    @SuppressWarnings("unused")
     public void setSlidingBlockDrawable(Drawable slidingBlockDrawable) {
         this.slidingBlockDrawable = slidingBlockDrawable;
         requestLayout();
+    }
+
+    /**
+     * 获取滑块图片
+     */
+    @SuppressWarnings("unused")
+    public Drawable getSlidingBlockDrawable() {
+        return slidingBlockDrawable;
     }
 
     /**
@@ -419,6 +428,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
      *
      * @param disableTensileSlidingBlock 是否禁止拉伸滑块图片
      */
+    @SuppressWarnings("unused")
     public void setDisableTensileSlidingBlock(boolean disableTensileSlidingBlock) {
         this.disableTensileSlidingBlock = disableTensileSlidingBlock;
         invalidate();
@@ -437,6 +447,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
      *
      * @param onClickTabListener Tab点击监听器
      */
+    @SuppressWarnings("unused")
     public void setOnClickTabListener(OnClickTabListener onClickTabListener) {
         this.onClickTabListener = onClickTabListener;
     }
@@ -455,10 +466,11 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
      *
      * @param disableViewPager 不使用ViewPager
      */
+    @SuppressWarnings("unused")
     public void setDisableViewPager(boolean disableViewPager) {
         this.disableViewPager = disableViewPager;
         if (viewPager != null) {
-            viewPager.setOnPageChangeListener(onPageChangeListener);
+            viewPager.removeOnPageChangeListener(onPageChangeListener);
             viewPager = null;
         }
         requestLayout();
@@ -469,6 +481,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
      *
      * @param tabViewFactory TabView生成器
      */
+    @SuppressWarnings("unused")
     public void setTabViewFactory(TabViewFactory tabViewFactory) {
         this.tabViewFactory = tabViewFactory;
 
@@ -482,6 +495,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
      *
      * @param bottomLineColor 底线的颜色
      */
+    @SuppressWarnings("unused")
     public void setBottomLineColor(int bottomLineColor) {
         this.bottomLineColor = bottomLineColor;
         if (bottomLinePaint != null) {
@@ -495,6 +509,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
      *
      * @param bottomLineHeight 底线的高度
      */
+    @SuppressWarnings("unused")
     public void setBottomLineHeight(int bottomLineHeight) {
         this.bottomLineHeight = bottomLineHeight;
         postInvalidate();
@@ -561,7 +576,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         }
     }
 
-    private class TabViewClickListener implements View.OnClickListener {
+    private class TabViewClickListener implements OnClickListener {
         @Override
         public void onClick(View v) {
             int index = (Integer) v.getTag();
@@ -594,7 +609,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         }
     }
 
-    private class DoubleClickGestureDetector extends GestureDetector.SimpleOnGestureListener implements View.OnTouchListener {
+    private class DoubleClickGestureDetector extends GestureDetector.SimpleOnGestureListener implements OnTouchListener {
         private GestureDetector gestureDetector;
         private View currentView;
 

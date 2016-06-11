@@ -132,21 +132,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/slidingTabStrip_3"
-            app:slidingBlock="@drawable/image_sliding_block">
-            <LinearLayout
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content">
-                <TextView
-	                style="@style/text_slidingTabTitle"
-	                android:text="详情"/>
-                <TextView
-	                style="@style/text_slidingTabTitle"
-	                android:text="评论"/>
-                <TextView
-	                style="@style/text_slidingTabTitle"
-	                android:text="攻略"/>
-            </LinearLayout>
-        </me.xiaopan.psts.PagerSlidingTabStrip>
+            app:slidingBlock="@drawable/image_sliding_block"/>
 
         <FrameLayout
 	        android:layout_width="match_parent"
@@ -171,18 +157,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/slidingTabStrip_4"
             android:layout_gravity="center_horizontal"
-            app:slidingBlock="@drawable/image_sliding_block">
-            <LinearLayout
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content">
-                <TextView
-	                style="@style/text_slidingTabTitle"
-	                android:text="聊天"/>
-                <TextView
-	                style="@style/text_slidingTabTitle"
-	                android:text="发现"/>
-            </LinearLayout>
-        </me.xiaopan.psts.PagerSlidingTabStrip>
+            app:slidingBlock="@drawable/image_sliding_block"/>
 
         <FrameLayout
 	        android:layout_width="match_parent"

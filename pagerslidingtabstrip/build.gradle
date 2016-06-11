@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 7
         targetSdkVersion 22
-        versionCode 170
-        versionName "1.7.0"
+        versionCode 171
+        versionName "1.7.1"
     }
     buildTypes {
         release {
@@ -19,6 +19,9 @@ android {
 
     lintOptions {
         abortOnError false
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_6
     }
 }
 
