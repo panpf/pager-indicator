@@ -1,85 +1,35 @@
 #![Logo](docs/logo.png) PagerSlidingTabStrip
 
+[![Release Version](https://img.shields.io/github/release/xiaopansky/PagerSlidingTabStrip.svg)](https://github.com/xiaopansky/PagerSlidingTabStrip/releases)
+
 这是Android上的一个ViewPager滑动导航条组件，主要就是用于配合ViewPager实现滑动的导航条，以容纳无限多的Tab
 
 ![smaple](docs/sample.gif)
 
-##Features
+### 特性
 >* 当所有的Tab在横向上无法充满整个屏幕的时候，将会根据allowWidthFull参数决定是否调整所有的Item来充满。调整的规则是平均分配每个Tab的宽度，如果某个Tab的最小宽度大于平均宽度，那么其宽度保持不变
 >* 当所有的Tab在横向上能够充满整个屏幕的时候，将会从左到右依次排列
 >* 用法简单，支持在布局中直接包含View或者在代码中直接调用PagerSlidingTabStrip.addTab()方法添加
 >* Tab View支持设置外边距
 >* 支持通过disableTensileSlidingBlock属性设置是否拉伸滑块图片
 
-## Sample App
+### 示例APP
 [Download it on Github](https://github.com/xiaopansky/PagerSlidingTabStrip/raw/master/docs/sample.apk)
 
 ![download](/docs/qr_download.png)
 
-##Usage Guide
-####1. 导入PagerSlidingTabStrip（Import PagerSlidingTabStrip to your project）
-
-#####使用Gradle（Use Gradle）
-``从JCenter仓库导入（Import from jcenter）``
+### 使用指南
+#### 导入
+从JCenter导入 
 
 ```groovy
 dependencies{
-	compile 'me.xiaopan:pagerslidingtabstrip:1.7.0'
+	compile compile 'me.xiaopan:pagerslidingtabstrip:lastVersionName'
 }
 ```
+`lastVersionName`：[![Release Version](https://img.shields.io/github/release/xiaopansky/PagerSlidingTabStrip.svg)](https://github.com/xiaopansky/PagerSlidingTabStrip/releases)`（不带v）`
 
-``离线模式（Offline work）``
-
-到[releases](https://github.com/xiaopansky/PagerSlidingTabStrip/releases)页面下载最新版本的aar包（这里以pagerslidingtabstrip-1.7.0.aar为例，具体请以你下载的版本为准），并放到你module的libs目录下
-
-然后在你module的build.gradle文件中添加以下代码：
-```groovy
-repositories{
-    flatDir(){
-        dirs 'libs'
-    }
-}
-
-dependencies{
-    compile(name:'pagerslidingtabstrip-1.7.0', ext:'aar')
-}
-```
-最后同步一下Gradle即可
-
-#####使用Eclipse（Use Eclipse）
-1. 首先到[JCenter](https://bintray.com/xiaopansky/maven/PagerSlidingTabStrip/view)下载最新版本的aar包
-2. 然后参考文章[1分钟不用改任何代码在Eclipse中使用AAR](http://blog.csdn.net/u013308121/article/details/46717499)集成aar
-
-####2. 配置最低版本（Configure min sdk version）
-PagerSlidingTabStrip最低兼容API v7
-
-#####使用Gradle（Use Gradle）
-在app/build.gradle文件文件中配置最低版本为7
-```groovy
-android {
-	...
-
-    defaultConfig {
-        minSdkVersion 7
-        ...
-    }
-}
-```
-
-#####使用Eclipse（Use Eclipse）
-在AndroidManifest.xml文件中配置最低版本为7
-```xml
-<manifest
-	...
-	>
-    <uses-sdk android:minSdkVersion="7"/>
-    <application>
-    ...
-    </application>
-</manifest>
-```
-
-####3.在布局中引用PagerSlidingTabStrip
+#### 在布局中使用
 ```xml
 <me.xiaopan.psts.PagerSlidingTabStrip
     xmlns:app="http://schemas.android.com/apk/res/你的包名"
@@ -109,7 +59,7 @@ android {
 >* ``disableViewPager``：禁用ViewPager，禁用后不会有初始选中状态效果，也不会绘制滑块，你调用setViewPager()方法也不会起作用
 >* ``disableTensileSlidingBlock``：禁止拉伸滑块图片
 
-####4.设置ViewPager
+#### 绑定ViewPager
 ```java
 ViewPager moreViewPager = (ViewPager) findViewById(R.id.viewPager);
 moreViewPager.setAdapter(...);
