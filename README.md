@@ -24,7 +24,7 @@
 
 ```groovy
 dependencies{
-	compile compile 'me.xiaopan:pagerslidingtabstrip:lastVersionName'
+	compile 'me.xiaopan:pagerslidingtabstrip:lastVersionName'
 }
 ```
 `lastVersionName`：[![Release Version](https://img.shields.io/github/release/xiaopansky/PagerSlidingTabStrip.svg)](https://github.com/xiaopansky/PagerSlidingTabStrip/releases)`（不带v）`
