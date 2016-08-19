@@ -1,5 +1,6 @@
 #![Logo](docs/logo.png) PagerSlidingTabStrip
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-PagerSlidingTabStrip-green.svg?style=true)](https://android-arsenal.com/details/1/4176)
 [![Release Version](https://img.shields.io/github/release/xiaopansky/PagerSlidingTabStrip.svg)](https://github.com/xiaopansky/PagerSlidingTabStrip/releases)
 
 这是Android上的一个ViewPager滑动导航条组件，主要就是用于配合ViewPager实现滑动的导航条，以容纳无限多的Tab
