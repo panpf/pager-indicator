@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PagerIndicator">
+        <attr name="pi_slidingBlock" format="reference|color" />
+        <attr name="pi_allowWidthFull" format="boolean" />
+        <attr name="pi_disableViewPager" format="boolean" />
+        <attr name="pi_disableTensileSlidingBlock" format="boolean" />
+        <attr name="pi_bottomLineColor" format="color" />
+        <attr name="pi_bottomLineHeight" format="dimension" />
+    </declare-styleable>
+</resources>

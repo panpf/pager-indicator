@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package me.xiaopan.pstssample;
-
-import java.util.List;
+package me.panpf.pagerid.sample;
 
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.List;
 
 /**
  * 滑动视图适配器

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Peng fei Pan <sky@xiaopan.me>
+ * Copyright (C) 2017 Peng fei Pan <sky@panpf.me>
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package me.xiaopan.psts;
+package me.panpf.pagerid;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -39,9 +39,9 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * 专为ViewPager定制的滑动选项卡
+ * 专为 ViewPager 定制的页面指示器
  */
-public class PagerSlidingTabStrip extends HorizontalScrollView {
+public class PagerIndicator extends HorizontalScrollView {
     private int currentPosition;    //当前位置
     private int lastOffset;
     private int lastScrollX = 0;
@@ -66,23 +66,23 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
     private final SetSelectedTabListener setSelectedTabListener = new SetSelectedTabListener();
     private final DoubleClickGestureDetector tabViewDoubleClickGestureDetector;
 
-    public PagerSlidingTabStrip(Context context) {
+    public PagerIndicator(Context context) {
         this(context, null);
     }
 
-    public PagerSlidingTabStrip(Context context, AttributeSet attrs) {
+    public PagerIndicator(Context context, AttributeSet attrs) {
         super(context, attrs);
         setHorizontalScrollBarEnabled(false);    //隐藏横向滑动提示条
         removeAllViews();
         if (attrs != null) {
-            TypedArray attrsTypedArray = context.obtainStyledAttributes(attrs, R.styleable.PagerSlidingTabStrip);
+            TypedArray attrsTypedArray = context.obtainStyledAttributes(attrs, R.styleable.PagerIndicator);
             if (attrsTypedArray != null) {
-                allowWidthFull = attrsTypedArray.getBoolean(R.styleable.PagerSlidingTabStrip_allowWidthFull, false);
-                slidingBlockDrawable = attrsTypedArray.getDrawable(R.styleable.PagerSlidingTabStrip_slidingBlock);
-                disableViewPager = attrsTypedArray.getBoolean(R.styleable.PagerSlidingTabStrip_disableViewPager, false);
-                disableTensileSlidingBlock = attrsTypedArray.getBoolean(R.styleable.PagerSlidingTabStrip_disableTensileSlidingBlock, false);
-                bottomLineColor = attrsTypedArray.getColor(R.styleable.PagerSlidingTabStrip_bottomLineColor, -1);
-                bottomLineHeight = (int) attrsTypedArray.getDimension(R.styleable.PagerSlidingTabStrip_bottomLineHeight, -1);
+                allowWidthFull = attrsTypedArray.getBoolean(R.styleable.PagerIndicator_pi_allowWidthFull, false);
+                slidingBlockDrawable = attrsTypedArray.getDrawable(R.styleable.PagerIndicator_pi_slidingBlock);
+                disableViewPager = attrsTypedArray.getBoolean(R.styleable.PagerIndicator_pi_disableViewPager, false);
+                disableTensileSlidingBlock = attrsTypedArray.getBoolean(R.styleable.PagerIndicator_pi_disableTensileSlidingBlock, false);
+                bottomLineColor = attrsTypedArray.getColor(R.styleable.PagerIndicator_pi_bottomLineColor, -1);
+                bottomLineHeight = (int) attrsTypedArray.getDimension(R.styleable.PagerIndicator_pi_bottomLineHeight, -1);
                 attrsTypedArray.recycle();
             }
         }
