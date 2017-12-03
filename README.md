@@ -5,7 +5,7 @@
 [![Android Arsenal][android_arsenal_image]][android_arsenal-link]
 [![Release Version][release_version_image]][release_version-link]
 
-这是 Android 上的一个 ViewPager 也页面指示器组件，用于标识当前显示的页面
+这是 Android 上的一个 ViewPager 页面指示器组件，用于标识当前显示的页面
 
 ![sample_image]
 
