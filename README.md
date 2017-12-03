@@ -43,8 +43,8 @@ dependencies {
     app:pi_allowWidthFull="true"
     app:pi_slidingBlock="@drawable/image_sliding_block">
     <LinearLayout
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content">
         <TextView style="@style/text_slidingTabTitle" android:text="精品"/>
         <TextView style="@style/text_slidingTabTitle" android:text="排行"/>
         <TextView style="@style/text_slidingTabTitle" android:text="分类"/>
