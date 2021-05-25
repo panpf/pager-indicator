@@ -3,7 +3,7 @@
 ![Platform][platform_image]
 [![API][min_api_image]][min_api_link]
 [![Android Arsenal][android_arsenal_image]][android_arsenal-link]
-[![Release Version][release_version_image]][release_version-link]
+[![Release Version][version_icon]][version_link]
 
 这是 Android 上的一个 ViewPager 页面指示器组件，用于标识当前显示的页面
 
@@ -19,17 +19,17 @@
 
 ## 开始使用
 
-### 1. 导入 PagerIndicator
+### 1. 从 mavenCentral 导入 PagerIndicator
 
 在 app 的 build.gradle 文件的 dependencies 节点中加入依赖
 
-```groovy
+```kotlin
 dependencies {
-	implementation 'me.panpf:pager-indicator:$lastVersionName'
+	implementation("io.github.panpf.pagerindicator:pagerindicator:${LAST_VERSION}")
 }
 ```
 
-请自行替换 `$lastVersionName` 为最新的版本：[![Release Version][release_version_image]][release_version-link] `（不要v）`
+`${LAST_VERSION}`: [![Download][version_icon]][version_link] (No include 'v')
 
 ### 2. 在布局中使用
 
@@ -105,7 +105,7 @@ pagerIndicator.setViewPager(viewPager);
 [min_api_link]: https://android-arsenal.com/api?level=9
 [android_arsenal_image]: https://img.shields.io/badge/Android%20Arsenal-PagerIndicator-green.svg?style=true
 [android_arsenal-link]: https://android-arsenal.com/details/1/4176
-[release_version_image]: https://img.shields.io/github/release/panpf/pager-indicator.svg
-[release_version-link]: https://github.com/panpf/pager-indicator/releases
+[version_icon]: https://img.shields.io/maven-central/v/io.github.panpf.pagerindicator/pagerindicator
+[version_link]: https://repo1.maven.org/maven2/io/github/panpf/pagerindicator/
 [sample_image]: docs/sample.gif
 [sample_image2]: docs/sample2.png
